@@ -1,0 +1,11 @@
+1.redis安装在d盘，在cmd里找到redis目录：先转到d盘，再cd即可。
+redis-server.exe redis.windows.conf  输入以下命令即可启动redis
+redis.windows-service.conf  这个配置文件与上个的区别是，如果用这个配置文件启动，那么redis会加入到windows服务中，随开机自动启动。
+
+
+每次手动启动Redis太麻烦，可以直接将redis加入到windows服务中
+安装命令：“redis-server.exe --service-install redis.windows.conf --loglevel verbose”
+卸载命令： redis-server --service-uninstall
+
+2.命令，打开redis-cli.exe
+set：设置数据，例如，可以设置键为user值为helloworld的数据，使用get命令得到user的值。

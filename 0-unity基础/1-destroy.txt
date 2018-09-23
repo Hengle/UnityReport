@@ -1,0 +1,8 @@
+1.Destroy(gameObject,n)方法是在ns后销毁物体
+   GameObject.Destroy（Object, float）；定时销毁某个游戏物体。
+   参数说明：
+   Object：要销毁的游戏物体；
+   float：时间，多少秒后销毁
+   游戏的粒子特效里会用到，将该函数放置在脚本的start()函数里
+
+2.DestroyImmediate(gameObject,boolean);    如果boolean参数的值为true，就会立刻销毁一个对象

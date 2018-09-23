@@ -1,0 +1,41 @@
+1.当添加一个新的菜单项到Inspector中（使用 “CONTEXT/Component”）,有时候获取一个真实组件的引用也是有必要的（例如：修改它的数据）。 
+这可以通过给新菜单项的静态方法添加一个MenuCommand参数。
+
+[MenuItem("CONTEXT/RigidBody/New Option")]
+private static void NewMenuOption(MenuCommand menuCommand)
+
+2.ContextMenu
+
+这个属性允许你去定义上下文菜单。它和使用MenuItem并以“CONTEXT/…”作为路径定义菜单项一样。 
+这个属性不同的是，你能给指定的组件定义默认的上下文菜单项，然而使用MeneItem只是为了扩展现有的组件菜单，比如引擎默认的组件。 
+
+3.ContextMenuItem
+
+这个属性被添加到组件类的字段上，上面显示了ContextMenu属性在组件上下文菜单中添加了一个菜单项，然后ContextMenuItem属性将在字段的上下文菜单中添加一个菜单项。 
+由于这个属性被添加到了一个字段上没有方法，所有它接受两个参数：一个用于显示菜单项的名字，一个用于指定一个当菜单被选中时要调用的实例方法。 
+
+ContextMenu()属性允许添加一个命令到该脚本组件上，给脚本增加一个可以通过右键或点击设置图标来手动调用它
+[ContextMenu ("do1")]
+
+	void doOne(){
+		Debug.Log ("do one");
+	}
+   	a.一般用于函数，且是非运行状态下执行该函数。
+        b.可以用于调试
+do1按钮对应doOne()函数。
+
+ ContextMenuItem Attribute
+[ContextMenuItem ("reset","ResetName")] 对变量追加一个右键菜单，通过点击菜单，调用相应函数,
+reset按钮，对应ResetName()函数
+
+4.AddComponentMenu
+
+此属性允许你去放置脚本到“Component”菜单下的任意位置，而不只是在“Component->Scripts”菜单下。你能使用它去更好的组织你的脚本。这个属性能够改善添加脚本的工作流程。
+重要提示：你需要重启才生效。
+
+using UnityEngine;
+
+[AddComponentMenu("Transform/Follow Transform")]
+public class FollowTransform : MonoBehaviour
+{
+}

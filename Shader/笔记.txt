@@ -1,0 +1,118 @@
+Mesh Filter ： 存储一个Mesh（网格，模型的网格，就是模型的由哪些三角面组成，组成一个什么样子的模型，三角面的一些顶点信息）
+Mesh Renderer:用来渲染一个模型的外观，就是样子， 按照 mesh给它皮肤，给它颜色
+	通过Material（材质）控制模型渲染的样子
+
+	Material
+		贴图(可以没有，可以是一个单纯的颜色)
+		Shader
+
+书籍
+	unity shader 入门精要（乐乐程序猿）
+	unity 3d shaderlab开发实战详解（第二版）
+	unity 5.x shaders and effects cookbook(中文版 unity着色器和屏幕特效开发秘籍)
+	
+CG语言教程官网
+	http://http.developer.nvidia.com/CgTutorial/cg_tutorial_frontmatter.html
+	
+一些网站
+	www.shadertoy.com
+	http://blog.csdn.net/poem_qianmo?viewmode=contents
+	
+数学函数在线演示
+	http://zh.numberempire.com/graphingcalculator.php
+	
+UnityCG.cginc中一些常用的函数
+	
+	//摄像机方向（视角方向）
+	float3 WorldSpaceViewDir(float4 v)  	根据模型空间中的顶点坐标 得到 （世界空间）从这个点到摄像机的观察方向
+	float3 UnityWorldSpaceViewDir(float4 v) 世界空间中的顶点坐标==》世界空间从这个点到摄像机的观察方向
+	float3 ObjSpaceViewDir(float4 v) 		模型空间中的顶点坐标==》模型空间从这个点到摄像机的观察方向
+	//光源方向
+	float3 WorldSpaceLightDir(float4 v) 	模型空间中的顶点坐标==》世界空间中从这个点到光源的方向
+	float3 UnityWorldSpaceLightDir(float4 v) 	世界空间中的顶点坐标==》世界空间中从这个点到光源的方向
+	float3 ObjSpaceLightDir(float4 v) 	模型空间中的顶点坐标==》模型空间中从这个点到光源的方向
+	//方向转换
+	float3 UnityObjectToWorldNormal(float3 norm) 把法线方向 模型空间==》世界空间
+	float3 UnityObjectToWorldDir(float3 dir) 把方向 模型空间=》世界空间
+	float3 UnityWorldToObjectDir(float3 dir) 把方向 世界空间=》模型空间
+
+什么是OpenGL、DirectX
+shader可以认为是一种渲染命令 ，由opengl 或者dx进行解析，来控制渲染丰富多彩的图形
+
+OpenGL 使用GLSL 编写shader
+DirectX 使用HSSL 编写shader
+英伟达 CG 编写shader（跨平台）
+
+Unity Shader的分类
+使用的是ShaderLab编写Unity中的Shader
+1,表面着色器 Surface Shader
+2,顶点/片元着色器 Vertex/Fragment Shader
+3,固定函数着色器 Fixed Function Shader
+
+Unityshader中属性的类型有哪些
+		_Color("Color",Color)=(1,1,1,1)
+		_Vector("Vector",Vector)=(1,2,3,4)
+		_Int("Int",Int)= 34234
+		_Float("Float",Float) = 4.5
+		_Range("Range",Range(1,11))=6
+		_2D("Texture",2D) = "red"{}
+		_Cube("Cube",Cube) = "white"{}
+		_3D("Texure",3D) = "black"{}
+		
+从应用程序传递到顶点函数的语义有哪些a2v
+POSITION 顶点坐标（模型空间下的）
+NORMAL 法线( 模型空间下)
+TANGENT 切线（模型空间）
+TEXCOORD0 ~ｎ　纹理坐标
+COLOR 顶点颜色
+
+从顶点函数传递给片元函数的时候可以使用的语义
+SV_POSITION 剪裁空间中的顶点坐标（一般是系统直接使用）
+COLOR0 可以传递一组值 4个
+COLOR1 可以传递一组值 4个
+TEXCOORD0~7 传递纹理坐标
+
+片元函数传递给系统
+SV_Target 颜色值，显示到屏幕上的颜色
+
+什么是光照模型
+光照模型就是一个公式，使用这个公式来计算在某个点的光照效果
+
+标准光照模型
+在标准光照模型里面，我们把进入摄像机的光分为下面四个部分
+自发光
+高光反射 
+Blinn光照模型 
+Specular=直射光  * pow( max(cosθ,0),10)  θ:是反射光方向和视野方向的夹角
+Blinn-Phong光照模型
+Specular=直射光  * pow( max(cosθ,0),10)  θ:是法线和x的夹角  x 是平行光和视野方向的平分线
+漫反射 Diffuse = 直射光颜色 * max(0,cos夹角(光和法线的夹角) )  cosθ = 光方向· 法线方向
+环境光
+
+Tags{ "LightMode"="ForwardBase" }
+只有定义了正确的LightMode才能得到一些Unity的内置光照变量
+#include "Lighting.cginc"
+包含unity的内置的文件，才可以使用unity内置的一些变量
+
+normalize() 用来把一个向量，单位化（原来方向保持不变，长度变为1）
+max() 用来取得函数中最大的一个
+dot 用来取得两个向量的点积
+_WorldSpaceLightPos0 取得平行光的位置
+_LightColor0取得平行光的颜色
+UNITY_MATRIX_MVP 这个矩阵用来把一个坐标从模型空间转换到剪裁空间
+_World2Object 这个矩阵用来把一个方向从世界空间转换到模型空间
+UNITY_LIGHTMODEL_AMBIENT用来获取环境光
+
+半兰伯特光照模型
+Diffuse = 直射光颜色 *（ cosθ *0.5 +０.５ ）
+兰伯特光照模型
+Diffuse = 直射光颜色 * max(0,cos夹角(光和法线的夹角) )  cosθ = 光方向· 法线方向
+
+shader中的各种空间坐标
+http://blog.csdn.net/lyh916/article/details/50906272
+什么是切线空间
+http://blog.csdn.net/bonchoix/article/details/8619624
+
+pixel = (normal+1)/2
+
+normal = pixel*2 - 1

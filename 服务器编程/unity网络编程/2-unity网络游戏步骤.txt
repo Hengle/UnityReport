@@ -1,0 +1,20 @@
+1.游戏服务器初始化
+首先要创建服务器，刚建好的服务器应该是等待其它玩家连接进入的状态。游戏服务器成为服务器端点，是控制游戏的重要组成部分，也可以理解为网络游戏中生成游戏房间的地方。可以将第一次登录并创建游戏房间的客户端用作服务器，将后续连接进入的其它玩家用作客户端。需要记住：如果该首次创建游戏房间的服务器端口断开连接，游戏结束。、
+
+初始化游戏服务器使用NetWork.InitializeServer函数，使用该函数可以设置服务器的最大连接数、端口号以及是否使用NAT等。（Net：Net Address Translation，网络地址转换，nat是地址转换器，可以将防火墙后面或互联网路由器后面的玩家的私人ip地址转换为公共ip地址）
+也可以为游戏服务器设置密码，使得只有通过Network.incomingPassword设置值进入的玩家才允许与服务器进行连接。
+
+2.客户端游戏连接
+要想连接游戏服务器，需要知道服务器的ip地址和端口号，然后使用Network.Connect函数创建连接，三个参数ip地址，端口号，密码。
+
+3.各个游戏端点之间的通信
+端点连接完成后，可通过相互间数据通信进行游戏。端点之间的通信可通过各自拥有的Network View组件来完成。
+Network类提供的回调函数：
+OnConnectedToServer:正常连接服务器时
+OnDisconnectedToServer:与服务器连接终止时
+OnFailedToConnect:连接失败时
+OnNetworkInstantiate:用Network.Instantiate生成网络对象时
+OnPlayerConnected:新玩家连接时
+OnPlayerDisconnected:现有玩家终止连接时
+OnSerializeNetworkView:NetworkView组件设置观察特定游戏对象时，脚本内衣Sendrate设置值为间隔不断调用
+OnServerInitialized:游戏服务器初始化完成时

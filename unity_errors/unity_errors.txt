@@ -1,0 +1,21 @@
+1.Unity报错 ： BCE0004: Ambiguous reference 'preview': CameraMotionBlurEditor.preview, UnityEditor.Editor.preview.
+建立项目版本为Unity4.6，改为5.3.4版本，运行项目报如下错误：
+
+“BCE0004: Ambiguous reference 'preview': CameraMotionBlurEditor.preview, UnityEditor.Editor.preview.”
+
+修改  preview 为 preview_
+
+var preview_ : SerializedProperty;
+preview_ = serObj.FindProperty ("preview"); 
+   
+EditorGUILayout.PropertyField (preview_, new GUIContent("Preview"));
+if (preview_.boolValue) 
+
+2.RuntimePlatform.WindowsWebPlayer 或者 RuntimePlatform.OSXWebPlayer 弃用的，已过时解决方法
+
+return Application.platform != RuntimePlatform.WindowsPlayer && Application.platform != RuntimePlatform.OSXPlayer;
+
+3.Error CS1617 Langversion '4'
+
+In Mono Develop:
+Right click on the assembly-csharp of your project -> Options. Under Build -> General change the drop box "C# Language Version".

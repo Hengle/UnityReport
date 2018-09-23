@@ -1,0 +1,4 @@
+1.Gizmos是场景视图里的一个可视化调试工具，使用回调函数
+Gizmos是在世界坐标系下进行绘制，如果要在本地绘制，就要使用transform.TransformPoint(vertices)函数。
+
+2.Gizmos相关的资源文件要放置在Gizmos文件夹下。

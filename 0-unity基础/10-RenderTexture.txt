@@ -1,0 +1,81 @@
+1.RenderTexture是什么
+
+
+
+     在U3D中有一种特殊的Texture类型，叫做RenderTexture，它本质上一句话是将一个FrameBufferObjecrt连接到一个server-side的Texture对象。
+
+     什么是server-sider的texture？
+
+     在渲染过程中，贴图最开始是存在cpu这边的内存中的，这个贴图我们通常称为client-side的texture，它最终要被送到gpu的存储里，gpu才能使用它进行渲染，送到gpu里的那一份被称为server-side的texture。这个tex在cpu和gpu之间拷贝要考虑到一定的带宽瓶颈。
+
+     什么是FrameBufferObject？
+
+     FrameBuffer就是gpu里渲染结果的目的地，我们绘制的所有结果（包括color depth stencil等）都最终存在这个这里，有一个默认的FBO它直接连着我们的显示器窗口区域，就是把我们的绘制物体绘制到显示器的窗口区域。但是现代gpu通常可以创建很多其他的FBO，这些FBO不连接窗口区域，这种我们创建的FBO的存在目的就是允许我们将渲染结果保存在gpu的一块存储区域，待之后使用，这是一个非常有用的东西。
+
+    当渲染的结果被渲染到一个FBO上后，就有很多种方法得到这些结果，我们能想想的使用方式就是把这个结果作为一个Texture的形式得到，通常有这样几种方式得到这个贴图：
+
+    a） 将这个FBO上的结果传回CPU这边的贴图，在gles中的实现一般是ReadPixels（）这样的函数，这个函数是将当前设为可读的FBO拷贝到cpu这边的一个存储buffer，没错如果当前设为可读的FBO是那个默认FBO，那这个函数就是在截屏，如果是你自己创建的FBO，那就把刚刚绘制到上面的结果从gpu存储拿回内存。
+
+   b)   将这个FBO上的结果拷贝到一个gpu上的texture，在gles中的实现一般是CopyTexImage2D（），它一般是将可读的FBO的一部分拷贝到存在于gpu上的一个texture对象中，直接考到server-sider就意味着可以马上被gpu渲染使用
+
+  c)  将这个fbo直接关联一个gpu上的texture对象，这样就等于在绘制时就直接绘制到这个texure上，这样也省去了拷贝时间，gles中一般是使用FramebufferTexture2D（）这样的接口。
+
+  
+
+  那么unity的RenderTexture正是这种c）方式的一种实现，它定义了在server-side的一个tex对象，然后将渲染直接绘制到这个tex上。
+
+  这有什么用？
+
+  我们可以将场景的一些渲染结果渲染到一个tex上，这个tex可以被继续使用。例如，汽车的后视镜，后视镜就可以贴一个rendertex，它是从这个视角的摄像机渲染而来。
+
+  我们还可以利用这个进行一些图像处理操作，传统的图像处理在cpu中一个for循环，一次处理一个像素，如果我们渲染一个四方形，然后把原图当成tex传入进去，写一个fragment shader，将渲染的结果渲染到一个rendertex上，那么rendertex上的东西就是图像处理的结果，unity中的一些图像后处理效果（如模糊，hdr等）就是这样做的。
+
+
+
+2.渲染到RenderTexture的几种方式
+
+
+
+ 1.在assets里创建一个RenderTexture，然后将其附给一个摄像机，这样这个摄像机实时渲染的结果就都在这个tex上了。
+
+ 2.有的时候我们想人为的控制每一次渲染，你可以将这个摄像机disable掉，然后手动的调用一次render。
+
+ 3. 有的时候我们想用一个特殊的shader去渲染这个RenderTexture，那可以调用cam的RenderWithShader这个函数，它将使用你指定的shader去渲染场景，这时候场景物体上原有的shader都将被自动替换成这个shader，而参数会按名字传递。这有什么用？比如我想得到当前场景某个视角的黑白图，那你就可以写个渲染黑白图的shader，调用这个函数。（这里还有一个replacement shader的概念，不多说，看下unity文档）
+
+ 4. 我们还可以不用自己在assets下创建rendertexture，直接使用Graphics.Blit(src, target, mat)这个函数来渲染到render texture上，这里的的target就是你要绘制的render texrture，src是这个mat中需要使用的_mainTex,可以是普通tex2d，也可以是另一个rendertex，这个函数的本质是，绘制一个四方块，然后用mat这个材质，用src做maintex，然后先clear为black，然后渲染到target上。这个是一个快速的用于图像处理的方式。我们可以看到UNITY的很多后处理的一效果就是一连串的Graphics.Blit操作来完成一重重对图像的处理，如果在cpu上做那几乎是会卡死的。
+
+    
+
+3.从rendertex获取结果
+
+
+
+ 大部分情况我们渲染到rt就是为了将其作为tex继续给其他mat使用。这时候我们只需把那个mat上调用settexture传入这个rt就行，这完全是在gpu上的操作。
+
+但有的时候我们想把它拷贝回cpu这边的内存，比如你想保存成图像，你想看看这个图什么样，因为直接拿着rt你并不能得到它的每个pixel的信息，因为他没有内存这一侧的信息。Texture2d之所以有，是因为对于选择了read/write属性的tex2D，它会保留一个内存这边的镜像。这种考回就是1部分写的a）方式，把rt从gpu拷贝回内存，注意这个操作不是效率很高。copy回的方法通常是这样的
+
+            Texture2D uvtexRead = new Texture2D()
+
+            RennderTexture currentActiveRT = RenderTexture.active;
+            // Set the supplied RenderTexture as the active one
+            RenderTexture.active = uvTex;
+            uvtexRead.ReadPixels(new Rect(0, 0, uvTexReadWidth, uvTexReadWidth), 0, 0);
+            RenderTexture.active = currentActiveRT;
+
+上面这段代码就是等于先把当前的fbo设为可读的对象，然后调用相关操作将其读回内存。
+
+4.其他的一些问题
+
+
+
+1.rendertexture的格式，rt的格式和普通的tex2D的格式并不是一回事，我们查阅文档，看到rt的格式支持的有很多种，最基本的ARGB32是肯定支持的，很多机器支持ARRBHALF或者ARGBFLOAT这样的格式，这种浮点格式是很有用的，想象一下你想把场景的uv信息保存在一张图上，你要保存的就不是256的颜色，而是一个个浮点数。但是使用前一定要查询当前的gpu支持这种格式
+
+2.如果你想从RenderTexture拷贝回到内存，那么rt和拷贝回来的tex的格式必须匹配，且必须是rgba32或者RGBA24这种基本类型，你把float拷贝回来应该是不行的
+
+3.rendertexture的分配和销毁，如果你频繁的要new一个rt出来，那么不要直接new，而是使用RenderTexture提供的GetTemporary和ReleaseTemporary，它将在内部维护一个池，反复重用一些大小格式一样的rt资源，因为让gpu为你分配一个新的tex其实是要耗时间的。更重要的这里还会调用DiscardContents
+
+4 DiscardContents（）这个rendertex的接口非常重要，好的习惯是你应该尽量在每次往一个已经有内容的rt上绘制之前总是调用它的这个DiscardContents函数，大致得到的优化是，在一些基于tile的gpu上，rt和一些tile的内存之间要存在着各种同步， 如果你准备往一个已经有内容的rt上绘制，将触发到这种同步，而这个函数告诉gpu这块rt的内容不用管他了，我反正是要重新绘制，这样就避免了这个同步而产生的巨大开销。总之还是尽量用GetTemporray这个接口吧，它会自动为你处理这个事情
+
+
+
+可以看到虽然RenderTexture这个技术是个普遍使用的技术，但是用好它还是要理解他的底层原理和避免一些使用的问题。

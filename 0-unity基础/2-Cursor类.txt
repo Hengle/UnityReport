@@ -1,0 +1,2 @@
+1.Cursor.SetCursor()可以修改鼠标的样式，
+Cursor.isVisible，设置鼠标是否可见

@@ -1,0 +1,24 @@
+1.Input.touchCount 触摸随之增长，一秒50次增量。
+Input.GetTouch(0).phase==TouchPhase.Moved 手指滑动中最后一帧滑动的状态是运动的。
+TouchPhase  触摸的几个状态。
+
+2.Touch结构体
+Touch.deltaPosition 增量位置（Input.GetTouch(0).deltaPosition）最后一帧滑动的值，只返回xy轴坐标，也可用vector3（z轴为0），所以一般用vector2接收。
+Touch.position;
+Touch.deltaTime;
+
+3.Touch类：用来记录一个手指触摸在屏幕上的状态与位置的各种相关数据。这其它中只有两个属性是你要注意的，就是Touch.fingerId和Touch.tapCount。
+               Touch.fingerId: 一个Touch的标识。Input.touches数组中的同一个索引在两帧之前，指向的可不一定是同一个Touch。用来标识某个具体的touch一定要用fingerId，在分析手势时、或处理多点触控时，fingerId是非常重要的。
+               Touch.tapCount: 点击的总人数，这个属性可以用来模拟“双击”的效果。
+               这里先普及一个概念吧，一个touch的生命周期是：当一个手指接触到触屏时，产生一个Touch，并分配它一个fingerId，到这个手指离开触屏这个touch就有了。在它整个生命周期里，它的figerId是不会变的。死掉的touch所使用过fingerId当也会被之后的touch多次使用。ps:其实也不是手指一离开，这个touch就立马死掉。还有一种特殊的情况就是：在手指敲开的地方，在一个很短的时间内，一个手指又回到这个地方的话，这个touch没不会死掉，这个也是Touch.tapCount属于的由来吧。这个touch生命周期，是我自己理解的，实际情况是不是这样就不知道了，料想也不会差的太多。
+    2、TouchPhase枚举：它列表描述了手指触摸的几种状态。对应Touch类中的phase属性。这是状态分别是：Began、Move、Stationary、Ended、Canceled。
+    3、Input.touches：一个Touch数组，代表着当前帧，所有手指在屏幕上的触碰状态与相关数据。（只读）
+    4、Input.touchCount： 触摸数量，相当于Input.touches.Length,触摸随之增长,一秒50次增量。（只读）
+    5、Input.multiTouchEnabled：设置与指示当前系统（注意不是指设备哦！）是否启用多点触控。不过这个属性有点怪，我在电脑上测试给它赋false不会报错但完全是没有用的，它的值一值是true. 不过在我的安卓手机上测试是正常的！Ture表示支持多点触控（一般是5点）；False表示单点触控。
+    6、Input.GetTouch(int index)：安索引值获取一个Touch对象
+
+4.if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+           touchposition = Input.GetTouch(0).deltaPosition;                
+           cube.transform.Translate(touchposition.x * 0.01f,touchposition.y * 0.01f,0f);
+        }

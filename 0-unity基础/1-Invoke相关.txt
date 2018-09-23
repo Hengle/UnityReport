@@ -1,0 +1,17 @@
+Invoke()方法是U3D的一种委托机制
+
+1、它应该在 脚本的生命周期（Start、Update、OnGUI、FixedUpdate、LateUpdate）中调用
+
+2、Invoke() 不能接受含有参数的方法
+
+3、在Time.ScaleTime=0时，Invoke()无效，因为它不会被调用到
+
+ 
+用法
+　　Invoke("方法名",int)；//int秒后调用名字为"方法名"的方法。
+
+　　InvokeRepeating("方法名",int1,int2);//int1秒后调用调用名字为"方法名"的方法，之后每隔int2秒后再次调用这个方法。
+
+　　CanceInvoke(string "方法名") 取消这个脚本中所有的调用 取消这个MonoBehaviour上的所有调用。
+
+　　JIsInvokeing("方法名");有返回值返回bool型。正在调用就返回true 

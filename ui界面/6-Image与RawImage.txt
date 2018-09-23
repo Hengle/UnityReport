@@ -1,0 +1,6 @@
+1.Image控件是非交互式的图片精灵Sprite控件，是常用的UGUI控件之一，它可以用来装饰界面、图标等。Image只能用来显示图片Sprite。 RawImage控件是用来显示非交互式的图像，它不像Image只能显示图片的Sprite，它可以显示任何形式的纹理图，包括脚本中利用WWW类从某个URL下载下来的图像或者纹理，还可以呈现出场景中某个摄像机的渲染图即在UI界面呈现出摄像机所拍摄的画面  。
+
+2.点击图片在属性面板里当Texture Type 为Texture时，不能被Iamge 所用。只有改为Sprite(2D and UI)，然后点击Apply后，才能被Image所用。
+
+3.注意：在选择Image还是RawImage的问题上，我们如果做为背景的大图片，那么就选择RawImage，如果做为一般用途的图片就选择image.以节省资源。
+　　需要说明的是，不管是Imageg还是RawImage，在图片属性组件里都有一个Set Native Size按钮，点击此按钮，图片自动变成美工给的初始大小。

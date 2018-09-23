@@ -1,0 +1,21 @@
+1.图片的切割，修改sprite mode，然后再sprite editor中完成切割。
+2.Animation:动画的设置，主要在动画编辑器中完成。
+sample变量，sample值越小，动画播放的越慢。
+3.Animator:动画的控制
+处理每个动作之间的切换关系：直接双击创建动画时产生的Controller，启动编辑器，设置关联性。
+完成关联性：绘制关联线，并给出触发条件（首先声明条件变量，将条件变量指定为动作间的触发条件）。可以对关联线的属性进行编辑，从而添加触发条件。
+4.按钮或按键控制动画切换，程序的编写
+public GameObject player;
+//获得控制器组件
+public Animator Action_Controller;
+//Walk值记录切换条件
+public bool Walk;
+public bool Attack;
+
+//完成变量的初始化
+void Start(){}
+//将程序代码里的bool变量与先前在Animator声明的变量进行连接，将Walk值赋值给条件变量，通过animator中的SetBool()函数完成（因为我们设置的条件变量是bool类型）
+void Update(){
+     Action_Controller.SetBool("Walk",Walk);
+}
+处理用户输入，if语句修改条件变量。

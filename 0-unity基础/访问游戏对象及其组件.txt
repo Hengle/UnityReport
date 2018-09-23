@@ -1,0 +1,55 @@
+1.访问游戏对象自身的游戏组件
+  GetComponent<T>(); //T为组件名称
+  GetComponents<T>();
+  transform.Translate(1,0,0) 和 GetComponent<Transform>().Translate(1,0,0) 是一样的
+  脚本挂载到游戏对象上以后就是组件，即脚本组件；
+       HelloWorld helloworld = GetComponent<HelloWorld>();
+       helloworld.sayHello();
+  使用代码将物体设置为不可见，获取Mesh Renderer组件
+  Getcomponent<MeshRenderer>().IsEnabled=false;
+
+2.访问其它游戏对象
+   1）通过属性查看器指定参数
+      例如： public GameObject otherObject;  //在属性查看器上赋值
+             void Update(){
+                 HelloWorld helloworld = GetComponent<HelloWorld>();
+                 helloworld.sayHello();
+             }
+
+   2)如果对象间有父子关系，
+     transform.Find("hand").Translate(0,0,1);
+        //查找名为name的（transform.gameObject）直接子物体并返回该子物体的Transform属性
+        //注意使用transform.find的时候，你要找的物体名字里面不能有空格，否则会失败
+     transform.parent.Translate(0,0,1);
+     transform.Find("hand").GetComponent<T>();
+
+    //获取所有子对象
+    foreach (Transform child in transform)
+    {
+        Debug.Log(child.gameObject.name);
+     }
+  
+    transform.Find();
+     可以在name中使用字符'/' 遍历整个路径。其中路径的根必须是transform.gameObject的直接子物体，
+     不能是孙子物体或更低辈分的子物体。
+     这样就可以访问到以transform.gameObject为根的物体树，包括其子物体，孙子物体，曾孙物体。。。。
+     若Cube物体有一个直接子物体Cube1，Cube1有一个直接子物体Cube2，我们就可以在Cube的脚本中使用transform.Find     ("Cube1/Cube2"); 或transform.FindChild("Cube1/Cube2");    这样就直接访问到了transform.gameObject的孙子物体Cube2。
+     //注意返回对象为Transform类，而非GameObject。
+
+   3）通过名字或标签
+      GameObject.Find() 和 GameObject.FindWithTag();
+      两个函数都是返回游戏对象
+      //GameObject.Find是遍历整个当前场景，挨个查找，效率偏低，非特殊情况一般不要使用
+        Transform.Find是只查找自己本身以及自己的子对象，效率比较高，用途比较大
+
+   4）通过参数传递来获得
+      例如：void OnTriggerStay(Collider other){
+                 if( other.GetComponent<Rigidbody>() ){
+                }
+            }
+
+   5)通过组件名称来获取游戏对象，返回值是组件类型
+     FindObjectsOfType 获取所有挂载指定类型组件的游戏对象
+         HelloWorld [] helloworlds = FindObjectsOfType<HelloWorld>();
+     FindObjectOfType  获取所有挂载指定类型组件的游戏对象
+         HelloWorld    helloworld  = FindObjectOfType<HelloWorld>();

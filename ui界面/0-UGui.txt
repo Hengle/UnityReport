@@ -1,0 +1,31 @@
+1.Canvas和EventSystem
+注意ui元素的渲染是根据层级面板中的对象的顺序进行的，先出现的先渲染，放在后面，后出现的后渲染，放在前面，所以主面板应该先渲染，次级面板后渲染，否则，就会出现打开次级面板，却看不到（被主面板遮挡）。
+代码修改渲染顺序：
+//改变控件transform的SiblingIndex,
+     transform.GetSiblingIndex();
+     transform.SetSiblingIndex(int index); //index值越大，越后渲染，层级越大，越显示在前面
+2.Panel控件和Text控件
+  在为Panel控件添加背景图片时，需要先选中要导入的图片，在其属性面板中将texture Type选项改为Sprite(2D and UI)，并单击apply按钮，然后将其导入Image组件里。
+  虽然text经常会被图片代替，但如果只是需要简单的文字接收或文本内容需要频繁变动的情况下，text控件会更方便。
+3.button控件
+4.image和RawImage控件
+  两个控件都是非交互式控件，主要用作界面图标和装饰界面。
+5.Toggle控件
+  Toggle控件一个重要组件是Group（将一组开关变为多选一开关）
+  实现步骤：首先在画布下创建一个空游戏对象，然后将需要成组的toggle设置为空对象的子对象，接着为空对象添加toggle group组件，
+            最后将空对象分别拖曳到各toggle控件的group参数中。
+Toggle group的重要属性allow switch off，勾选后，将允许所有的toggle不被选中，否则，必须有且只有一个被选中。
+6.Slider控件和Scrollbar控件
+  如果出现滑杆无法滑动，则有可能是被其他控件覆盖了。
+7.InputField控件
+  InputField控件类似于我们平时说的TextBox，用于接受用户输入；Text组件则类似于Label，用于输出静态文本。
+  InputField是一个复合组件，其包含两个子组件：
+  	a. PlaceHolder：用于显示Mask Text，即最初的提示文本；
+	b. Text：用于显示输入框中的文本信息。
+8.界面的布局管理
+9.不规则形状按钮的开发流程
+10.Rect Transform
+控件的位置需要三个参数来确定，父物体的锚点，子物体的锚点，两者的相对位置
+在unity中，anchors可以理解为父物体的锚点，pivot可以理解为子物体的锚点，posX等参数控制相对位置。
+
+ 

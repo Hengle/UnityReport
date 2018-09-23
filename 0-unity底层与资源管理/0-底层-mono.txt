@@ -1,0 +1,14 @@
+1.Mono是基于.NET框架的开源开发平台，允许跨平台构建应用。
+
+Mono的.NET实现基于ECMA标准的C#和CLI。
+
+Mono由以下几部分组成：
+C#编译器，支持C#1.0~5.0
+Mono Runtime，实现了CLI，支持JIT，AOT，library loader，垃圾回收器，线程系统和互操作功能。
+Base Class Library，基础类库，与微软的.NET BCL兼容。
+Mono Class Library，BCL之上的类库。
+Mono的亮点：
+多平台，支持Linux，OS X，BSD，Windows，Wii，PS3
+多架构，包括X86，X86-64，ARM，S390，PowerPC等。
+多语言，支持C#，VB，Java，Python，Ruby，Eiffel，F#，Oxygene等。
+开源免费

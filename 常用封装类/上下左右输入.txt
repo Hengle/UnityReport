@@ -1,0 +1,63 @@
+	void FixedUpdate(){
+		/********箭头控制******/
+		//上
+		if (Input.GetKey (KeyCode.UpArrow)) {
+			if (null != rb) {
+				rb.AddForce (new Vector3 (0, 11, 0), ForceMode.Impulse);
+			}
+		} 
+		//下
+		if (Input.GetKey (KeyCode.DownArrow)) {
+			//rb.AddForce (new Vector3 (1, 0, 0), ForceMode.Force);
+		} 
+		//左
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+
+		} 
+		//右
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			rb.AddForce (new Vector3 (1, 0, 0), ForceMode.Force);
+		} 
+
+		/********WASD控制******/
+		//上
+		if (Input.GetKey (KeyCode.W)) {
+			if (null != rb) {
+				rb.AddForce (new Vector3 (0, 11, 0), ForceMode.Impulse);
+			}
+		} 
+		//下
+		if (Input.GetKey (KeyCode.S)) {
+			//rb.AddForce (new Vector3 (1, 0, 0), ForceMode.Force);
+		} 
+		//左
+		if (Input.GetKey (KeyCode.A)) {
+
+		} 
+		//右
+		if (Input.GetKey (KeyCode.D)) {
+			rb.AddForce (new Vector3 (1, 0, 0), ForceMode.Force);
+		} 
+
+		/********箭头和WASD共同控制******/
+		//上
+		if (Input.GetKey (KeyCode.UpArrow)||Input.GetKey (KeyCode.W)) {
+			if (null != rb) {
+				rb.AddForce (new Vector3 (0, 11, 0), ForceMode.Impulse);
+			}
+		} 
+		//下
+		if (Input.GetKey (KeyCode.DownArrow)||Input.GetKey (KeyCode.S)) {
+			//rb.AddForce (new Vector3 (1, 0, 0), ForceMode.Force);
+		} 
+		//左
+		if (Input.GetKey (KeyCode.LeftArrow)||Input.GetKey (KeyCode.A)) {
+
+		} 
+		//右
+		if (Input.GetKey (KeyCode.RightArrow)||Input.GetKey (KeyCode.D)) {
+			rb.AddForce (new Vector3 (1, 0, 0), ForceMode.Force);
+		} 
+
+
+	}

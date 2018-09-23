@@ -1,0 +1,29 @@
+1.CrossFade是按照动画的自身时间进行混合。如果动画10秒，混合持续时间0.2，会在2秒后混合完成
+CrossFadeInFixedTime是按照实际时间进行混合。如果动画10秒，混合持续时间0.2，会在0.2秒后混合完成
+
+使用CrossFade或CrossFadeInFixedTime混合时，如果混合时间大于动画自身长度，动画自身会被滞留在最后一帧，直到混合结束
+
+2.Animator的SetFloat接口可以设置阻尼，并且4种类型变量只有float是支持阻尼的。
+public void SetFloat(int id, float value, float dampTime, float deltaTime);
+这个接口需要每帧调用，每次调用后animator对应的param的值为 
+value = current + (target - current) * deltaTime / (dampTime + deltaTime);
+
+3.简单地说，状态机就是角色在某种条件的的行为。每一个状态会有不同的颜色，每一个动画状态都对应一个动作。每一个动画状态机最少要有“Any State”、“Entry”。
+
+4.动画转换条件解释：
+Has Exit Time，接受打断时间 勾选后要等当前动画播放完后，才会接下一个状态。不勾选的话 就允许动画播放一半时被打断
+	状态转换里的Has Exit Time就是必须过度的时间，处于这个时间时，是不允许任何对动画的操作的。
+Exit Time 动画的打断时间（从哪一帧开始逐渐降低当前动画的权重并切换到下一动画）
+Fixed Duration 固定持续时间（这其实是一个切换开关，切换是按照秒显示还是按照百分比显示）
+Transition Duration 动画切换的过度时间间隔，越小切换的越快，但是不能设置为0，否则会失去连贯性
+
+5.Mecanim提供了重新设定目标的功能，如果类人模型的骨骼构造一致就可以直接使用其他模型的动画。
+
+6.Animator视图的参数需要区分大小写，而且Unity不会自动忽略后面的空格。
+
+7.animator的trigger变量只能赋值，是一种触发变量，触发之后会自动关闭掉，没办法获取当前状态。
+比如xxxx.animator.settrigger("Attack");在执行这一句时才是true ，但是执行后马上自动的变为false。适合用在单次动作或者连续不同动作使用，比如三国无双系列的攻击和蓄力攻击。但是如果动画没有执行，只是改变了转换条件Attack的值，那么Attack会一直为true直到动画被执行；比如，如果按下攻击按键后，再按攻击键，它不会再播放动画，但是Attack的值为真。
+bool跟trigger不同在于触发之后会一直执行，而且可以获取当前状态。适合用在长时间持续动作,比如行走跑步。
+void ResetTrigger(...);
+重设该触发参数为False
+如果是当前状态播放结束再跳转的话，会用到这个方法，在结束之前可以重置回False；

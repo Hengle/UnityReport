@@ -1,0 +1,6 @@
+1.防止变量重命名后的数据丢失，添加引用using UnityEngine.Serialization;
+FormerlySerializedAs（name）
+//[FormerlySerializedAs("a1")]
+//public string a2;
+这样可以把a1删除了，然后 a1序列化的数据就保存在a2里。但是它这个有局限性，比如这里我想把a1的数据放到一个新的对象里就不行了。
+而且它这个只能替换相同数据结构。

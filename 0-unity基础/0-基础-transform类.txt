@@ -1,0 +1,65 @@
+1.unity中所有挂载到游戏对象上的脚本的类必须继承MonoBehaviour
+
+2.只有序列化的成员变量才能显示在属性查看器中
+
+3.unity很多游戏对象的操作都是通过在脚本中修改transform和rigidbody参数来实现的
+
+4.transform.Translate() 和 transform.Rotate() 都有四个参数的重载形式，
+     第四个参数是space枚举类型，如果设置为"Space.Self"，变换应用于自身轴，如果设置为"Space.World"，变换应用于世界坐标系。
+  游戏对象的移动和旋转可以通过改变坐标和角度来实现。
+  transform.Translate() 可以通过修改transform.position的值来实现
+  transform.Rotate() 可以通过修改transform.rotation的值来实现
+
+5.unity中，x为红色轴代表左右，y为绿色轴代表上下，z为蓝色轴代表前后。
+
+6.一般称对象gameobject，如果想找其transform就用gameobject.transform。如果你知道了transform，又想知道是属于哪个对象的，就用transform.gameObject 
+
+7.不只GameObject对象有GetComponent方法，transform和collider等组件也有，它们所代表的其实就是拥有这些组件的游戏对象。
+
+8.Transform.TransformDirection 变换方向
+function TransformDirection (direction : Vector3) : Vector3
+Description描述
+Transforms direction from local space to world space.
+从自身坐标到世界坐标变换方向。
+This operation is not affected by scale or position of the transform. The returned vector has the same length as direction.
+这个操作不会受到变换的缩放和位置的影响。返回的向量与direction有同样的长度。
+
+9.默认为Space.Self,还可以设置为World.Self
+  区别：Self是本地坐标系，即物体的x，y，z轴，它和世界坐标轴基本上不会重合（特殊情况除外，如初始状态）。
+  function Translate (translation : Vector3, relativeTo : Space = Space.Self) : void
+  function Translate (x : float, y : float, z : float, relativeTo : Space = Space.Self) : void
+
+  function Translate (translation : Vector3, relativeTo : transform) : void
+  function Translate (x : float, y : float, z : float, relativeTo : transform) : void
+
+10.transform.position 和 transform.localposition 的区别
+     position是根据世界原点为中心
+     localPosition是根据父节点为中心,如果没有父节点,localpositon和position是没有区别的
+11.Transform.RotateAround 围绕旋转
+按照angle度通过在世界坐标的point轴旋转物体。
+
+简单的说，按照多少度在世界坐标的某位置轴旋转物体。
+
+gameObject.transform.RotateAround(new Vector3(0, 0, 0), new Vector3(0, 1.0f, 0), 
+                                  Speed * Time.deltaTime * Input.GetAxis("Horizontal"));
+//表示按下左右移动键是，物体在指定的一点绕这Y轴旋转。旋转的方式如下图：
+
+12.三种旋转方式
+	1   transform.localEulerAngles
+使用localEulerAngles进行旋转的时候，我们要使用transform.localEulerAngles = new Vector3(x, y,z); 其中，new Vector(x,y,z)为游戏物体最终旋转到的目标角度，x.y,z的值分别都是以0为基准(即游戏物体的初始位置（0,0,0）)，同时也以自身坐标系为参考，而不是世界坐标系。
+
+	2  transform.rotation
+//将欧拉旋转角转换为四元素旋转角
+
+Quaternion rotation= Quaternion.Euler(new Vector3(x, y,z)；
+
+Transform.rotation=rotation;
+
+ new Vector(x,y,z)为游戏物体最终旋转到的目标角度，x.y,z的值分别都是以0为基准(即游戏物体的初始位置（0,0,0）)，同时也以自身坐标系为参考，而不是世界坐标系。
+
+	3  transform.Rotate(参数)
+transform.Rotate(x,y,z)：以自身坐标系为参考，而不是世界坐标系，分别以x度y度z度绕X轴、Y轴、Z轴匀速旋转
+
+transform.Rotate(轴，Space.Self):以自身坐标系为参考
+
+Transform.Rotate(轴，Space.World):以世界坐标系为参考

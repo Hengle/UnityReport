@@ -1,0 +1,22 @@
+1.主要是OnPosterRenderer函数，它会自动清除之前的曲线
+		if (!material)
+		{
+			Debug.LogError("请给材质资源赋值");
+			return;
+		}
+		material.SetPass(3);//设置该材质通道，0为默认值
+		//GL.PushMatrix();
+		GL.LoadOrtho();//设置绘制2D图像
+		GL.Begin(GL.LINES);//表示开始绘制，绘制类型为线段 
+		for(int j=0;j<lines.Count;j++){
+			lineInfo=lines[j];
+			for (int i = 0; i < lineInfo.Count - 1; i++)
+			{
+				Vector3 start = lineInfo[i];
+				Vector3 end = lineInfo[i + 1];
+				//绘制线段
+				DrawLine(start.x, start.y, end.x, end.y);
+			}
+		}
+
+		GL.End();

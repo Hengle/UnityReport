@@ -1,0 +1,107 @@
+1.遮挡剔除介绍及其与视锥体剔除的不同
+遮挡剔除 (Occlusion Culling) 功能可在对象因被其他物体遮挡，当前在相机中无法看到时，禁用对象渲染。该功能不会在三维计算机图形中自动开启，因为在大部分情况下，离相机最远的对象最先渲染，离相机近的对象覆盖先前的物体（该步骤称之为“重复渲染 (overdraw)”）。遮挡剔除 (Occlusion Culling) 与视锥体剔除 (Frustum Culling) 不同。视锥体剔除 (Frustum Culling) 只禁用相机视野外的对象渲染，不禁用视野中被遮挡的任何物体的渲染。注意，使用遮挡剔除 (Occlusion Culling) 功能时，仍将受益于视锥体剔除 (Frustum Culling)。
+
+遮挡剔除过程将使用虚拟相机构建潜在可见对象集的层级视图，应用于整个场景。运行时各相机使用这些数据来确定可见和不可见物体。有了该信息，Unity 将确保仅发送可见对象进行渲染，从而减少绘制调用的次数，提高游戏性能。
+
+遮挡剔除的数据由单元格组成。每个单元格是场景中整个包围区域的细分部分。更具体来说，单元格组成一个二叉树。遮挡剔除 (Occlusion Culling) 使用两棵树，一个用于视图单元格 (View Cells)（静态对象 (Static Objects)），另一个用于目标单元格 (Target Cells)（移动对象 (Moving Objects)）。视图单元格 (View Cells) 映射到定义可见静态对象的索引列表，使静态对象的剔除结果更精确。
+
+创建对象时要切记这一点，因为对象大小需要与单元格大小达到良好平衡。理论上说，单元格不应比对象小太多，同时对象也不应占用太多单元格。有时可以将大对象分成几个小块，改善剔除效果。也可以合并一些小对象，减少绘制调用。只要都在同一个单元格内，遮挡剔除就不会受影响。单元格集合和确定哪些单元格可以在任何其他单元格中可见的可见性信息被称为 PVS（潜在可见集合 (Potentially Visible Set)）。
+
+2.设置遮挡剔除 (Occlusion Culling)
+如需使用遮挡剔除 (Occlusion Culling) 功能，须手动设置一些项。首先，关卡中的几何体必须分成几个大小适中的部分。这也有助于布置关卡中被墙壁、建筑物等大对象相互遮挡的明确定义的小区域。所用原理为单个网格根据遮挡数据开启或关闭。如果有一个对象包含室内所有家具，那么整套家具要么全被剔除，要么全不被剔除。这与为每件家具制作网格一样没有多大意义，以便每件家具都能根据相机视点被单个剔除。
+
+须在检视器 (Inspector) 中将想要成为遮挡的一部分的所有场景对象标记成静态遮挡物 (Occluder Static)。最快的操作方法为选择多个想要加入遮挡计算的对象，将其标记为静态遮挡物 (Occluder Static) 和静态被遮挡物 (Occludee Static)。
+
+
+标记对象的遮挡 (Occlusion) 情况
+
+应在什么时候使用静态被遮挡物 (Occludee Static)？不会遮挡其他对象的透明物体及也不太可能遮挡的小对象应标为被遮挡物 (Occludees)，而不是遮挡物 (Occluders)。也就是说考虑这些对象被其他对象遮挡，其本身不视为遮挡物，帮助减少计算任务量。
+
+遮挡剔除窗口 (Occlusion Culling Window)
+对于处理遮挡剔除 (Occlusion Culling) 的大部分操作来说，建议使用遮挡剔除窗口 (Occlusion Culling Window)（窗口 (Window)->遮挡剔除 (Occlusion Culling)）。
+
+在遮挡剔除窗口 (Occlusion Culling Window) 中，可处理遮挡物网格及遮挡区域 (Occlusion Areas)。
+
+如果处在遮挡剔除窗口 (Occlusion Culling Window) 的对象 (Object) 选项卡并在场景中选择了某网格渲染器 (Mesh Renderer)，可修改相关静态 (Static) 标志：
+
+
+网格渲染器 (Mesh Renderer) 的遮挡剔除窗口 (Occlusion Culling Window)
+如果处在遮挡剔除窗口 (Occlusion Culling Window) 的对象 (Object) 选项卡并选定遮挡区域 (Occlusion Area)，可处理相关的遮挡区域 (OcclusionArea) 属性（如需了解更多信息，请参阅遮挡区域 (Occlusion Area) 部分）。
+
+
+遮挡区域 (Occlusion Area) 的遮挡剔除窗口 (Occlusion Culling Window)
+注意：如果默认不创建任何遮挡区域，遮挡剔除将应用到整个场景。
+
+注意：只要相机位于遮挡区域外，遮挡剔除就不会应用。设置遮挡区域 (Occlusion Area) 覆盖相机可能出现的位置非常重要，但会把区域放的太大，烘培时耗费性能。
+
+遮挡剔除 (Occlusion Culling) – 烘培 (Bake)
+
+遮挡剔除检视器中的烘培选项卡。
+属性
+
+
+技术 (Technique)	选择遮挡剔除烘培的类型
+仅限 PVS (PVS only)	只有静态对象会被遮挡剔除。动态对象仅根据视图视锥体进行剔除。该技术的 CPU 耗费最小，但由于动态对象不会被剔除，仅推荐动态对象和角色很少的游戏采用。所有可见性经过预计算，所以运行时无法打开或关闭入口。
+PVS 和动态对象 (PVS and dynamic objects)	静态对象使用预计算可见性进行剔除。动态对象使用入口剔除。该技术可有效平衡运行时消耗过大和剔除效率。所有可见性经过预计算，所以运行时无法打开或关闭入口。
+自动生成入口 (Automatic Portal Generation)	入口为自动生成。静态对象和动态对象通过入口剔除。允许运行时打开和关闭入口。该技术能最精确地剔除对象，但 CPU 的性能消耗也最大。
+视图单元格大小 (View Cell Size)	每个视图区域单元格的大小。值越小，精确的遮挡剔除越多。该值是遮挡精确度和保存大小的折衷。
+近裁剪平面 (Near Clip Plane)	近裁剪平面 (Near Clip Plane) 应设为用于游戏中所有相机的最小近裁剪平面。
+远裁剪平面 (Far Clip Plane)	远裁剪平面 (Far Clip Plane) 用于剔除对象。距离大于该值的所有对象都将自动被遮挡。（应设为用于游戏中所有相机的最大远裁剪平面。）
+内存限制 (Memory limit)	提示基于 PVS 的烘培，自动生成入口 (Automatic Portal Generation) 模式中不可用。
+调整完这些值后，可单击烘培 (Bake) 按钮开始处理遮挡剔除 (Occlusion Culling) 数据。如果对结果不满意，可单击清除 (Clear) 按钮删除之前计算出来的数据。
+
+遮挡剔除 (Occlusion Culling) – 可视化 (Visualization)
+
+遮挡剔除检视器中的可视化选项卡。
+近平面和远平面定义用于计算遮挡数据的虚拟相机。如果不同的近平面或远平面有几个相机，应使用所有相机中最小的近平面距离和最大的远平面距离，以正确包含对象。
+
+场景中的所有对象都影响包围区域的大小，请尽量将所有对象都包含在场景的可视界限内。
+
+准备好生成遮挡数据时，单击烘培 (Bake) 按钮。记得选择烘培 (Bake) 选项卡中的内存限制 (Memory limit)。值越低，生成速度越快，准确性越低；高值用于生成接近发布效果的质量。
+
+请记住，构建遮挡数据所需的时间由单元格级别、数据大小和选择的质量决定。Unity 将在主窗口底部显示 PVS 生成的状态。
+
+处理完成后，应该可以在视图区域 (View Area) 看到一些彩色立方体。彩色区域将共享相同的遮挡数据。
+
+如果想移除所有预计算的遮挡剔除 (Occlusion Culling) 数据，请单击清除 (Clear)。
+
+遮挡区域（仅限专业版）
+要对正在移动的对象应用遮挡剔除，您必须创建一个遮挡区域 (Occlusion Area) 并将其大小修改为与正在移动的对象将要被定位的空间匹配（当然，正在移动的对象不能被标记为静态的）。您可以通过将遮挡区域 (Occlusion Area) 组件添加到空白游戏对象（在菜单中选择组件 (Component) -> 渲染 (Rendering) -> 遮挡区域 (Occlusion Area) 来创建遮挡区域 (Occlusion Area)。
+
+创建遮挡区域 (Occlusion Area) 之后，请勾选目标体积 (Is Target Volume) 复选框来遮挡正在移动的对象。
+
+
+用于正在移动的对象的遮挡区域 (Occlusion Area) 属性。
+属性:	功能：
+大小 (Size)	大小 (Size) 定义遮挡区域 (Occlusion Area) 的大小。
+中心 (Center)	设置遮挡区域 (Occlusion Area) 的中心。默认情况下，中心的坐标为 0,0,0，且位于盒子中心。
+目标体积 (Is Target Volume)	定义相机可能的位置。要遮挡位于此遮挡区域 (Occlusion Area) 中的静态对象，请勾选此项。
+Is Target Volume	当您想遮挡正在移动的对象时，请选择此项。
+目标分辨率 (Target Resolution)	决定此区域中的遮挡剔除的精确度。此项会影响遮挡区域 (Occlusion Area) 中单元的大小。请注意：此项仅影响目标区域 (Target Area)。
+低 (Low)	This takes less time to calculate but is less accurate.
+中 (Medium)	此设置能平衡处理遮挡剔除数据的精确度和花费的时间。
+高 (High)	此设置花费的计算时间更长，但精确度也更高。
+非常高 (Very High)	当您需要的精确度比高分辨率的精确度更高时，请使用这个值。但请注意，此设置需要的计算时间更长。
+极高 (Extremely High)	当您想对可移动对象进行几乎完全的遮挡剔除时，请使用这个值。请注意：此设置需要很长的计算时间。
+添加遮挡区域 (Occlusion Area) 之后，您需要看一看它是如何将盒子分为单元的。要查看是如何计算遮挡区域 (occlusion area) 的，请选择编辑 (Edit) 并单击遮挡剔除预览面板 (Occlusion Culling Preview Panel) 中的视图 (View) 按钮。 in the
+
+
+测试已生成的遮挡
+设置好遮挡后，您可以通过启用遮挡剔除 (Occlusion Culling)（位于可视化 (Visualize) 模式下的遮挡剔除预览面板 (Occlusion Culling Preview Panel) 中）并在场景视图中四处移动主相机 (Main Camera) 来测试它。
+
+
+场景视图 (Scene View) 中的遮挡视图 (Occlusion View) 模式
+随着您四处移动主相机 (Main Camera)（无论是否在播放 (Play) 模式下），您会看到各种对象禁用它们自己。您需要找出的是遮挡数据中的所有错误。如果您在移动的时候看到对象突然弹入视图中，这就是一个错误。如果这种情况发生，您可以通过改变分辨率（如果您正在用目标体积属性播放）或四处移动对象以覆盖错误来修复此错误。要调试遮挡的问题，您可以将主相机 (Main Camera) 移到有问题的位置进行聚光灯检查
+
+处理完成后，您会在视图区域 (View Area) 看到一些彩色的立方体。蓝色的立方体表示目标体积 (Target Volume) 的单元划分。白色的立方体表示见体积 (View Volume) 的单元划分。如果参数设置正确，您会看到一些未被渲染的对象。这是因为这些对象要么在相机的视见体外要么被其他对象遮挡住了。
+
+如果遮挡完成后场景内没有任何对象被遮挡，那么您可以将对象拆分成更小的块，以便它们能被完全地包含在单元中。
+
+遮挡门户
+为了创建运行时间可以打开和关闭的遮挡基元，Unity 使用遮挡门户 (Occlusion Portal)。
+
+
+属性:	功能：
+打开 (Open)	表明门户是否打开（可编写脚本）
+中心 (Center)	设置遮挡区域 (Occlusion Area) 的中心。默认情况下，中心的坐标为 0,0,0，且位于盒子中心。
+大小 (Size)	定义遮挡区域 (Occlusion Area) 的大小。

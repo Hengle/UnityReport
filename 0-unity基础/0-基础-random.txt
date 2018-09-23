@@ -1,0 +1,21 @@
+1、成员变量
+
+seed：设置用于随机数生成器的种子。
+//数字
+value：返回一个随机数，在0.0（包括）～1.0（包括）之间。（只读）
+//vector3
+insideUnitSphere：返回半径为1的球体内的一个随机点。（只读）
+insideUnitCircle：返回半径为1的圆内的一个随机点。（只读）
+//vector2
+onUnitSphere：返回半径为1的球体在表面上的一个随机点。（只读）
+//Quaternion
+rotation：返回一个随机旋转角度。（只读）
+
+//颜色的随机
+item.GetComponent<MeshRenderer> ().material.color = Random.ColorHSV ();
+
+2、方法
+
+Range：返回min和max之间的一个随机浮点数，包含min但不包含max。
+
+如果max等于min，将返回min。返回值永远不会是max，除非min等于max。

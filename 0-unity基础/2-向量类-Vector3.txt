@@ -1,0 +1,63 @@
+1.Unity3d vector3.forward和transform.forward的区别
+vector3.forward的值永远等于（0，0，1），即本地坐标系的z轴。
+
+transform.forward的值则等于当前物体的自身坐标系z轴在世界坐标上指向，因此不一定等于(0,0,1)，但是其magnitude长度是1。
+transform.forward=transform.rotation*vector3.forward;
+世界坐标系是永远不变的，而物体的自身坐标系随着物体的移动时时刻刻在改变。
+
+2.属性和方法
+A.十个静态属性 
+上下左右前后，0向量，单位向量，正无穷和负无穷
+up/down/left/right/front/back/zero/identity/positiveInfinity/negativeInfinity
+
+B.非静态属性
+normalized
+Returns this vector with a magnitude of 1 (Read Only).
+返回向量的长度为1（只读）。
+magnitude
+Returns the length of this vector (Read Only).
+返回向量的长度（只读）。
+sqrMagnitude
+Returns the squared length of this vector (Read Only).
+返回这个向量的长度的平方（只读）。
+
+C.静态方法
+Scale
+Multiplies every component of this vector by the same component of scale.
+由缩放的相同的组件对应乘以这个矢量的每个组件。
+例如：// prints (2.0,6.0,12.0)
+      //print (Vector3.Scale (Vector3(1,2,3), Vector3(2,3,4)));
+Normalize
+Makes this vector have a magnitude of 1.
+使向量的长度为1。
+ToString
+Returns a nicely formatted string for this vector.
+返回此向量格式化的字符串
+Lerp
+Linearly interpolates between two vectors.
+两个向量之间的线性插值。
+Slerp  //static function Slerp (from : Vector3, to : Vector3, t : float) : Vector3
+两个向量之间的球形插值
+Cross  //static function Cross (lhs : Vector3, rhs : Vector3) : Vector3
+两个向量的交叉乘积。返回lhs x rhs，叉乘结果的向量方向判断遵循左手坐标系。
+Dot  //static function Dot (lhs : Vector3, rhs : Vector3) : float
+Dot Product of two vectors.
+两个向量的点乘积。
+Project
+Projects a vector onto another vector.
+投影一个向量到另一个向量。
+Angle(返回两个向量的夹角)
+Returns the angle in degrees between from and to.
+由from和to两者返回一个角度。
+Distance(两个异面向量的距离的计算)
+Returns the distance between a and b.
+返回a和b之间的距离。
+ClampMagnitude
+Returns a copy of vector with its magnitude clamped to maxLength.
+返回向量的长度，最大不超过maxLength所指示的长度。
+Min（根据向量的长度进行判断）
+Returns a vector that is made from the smallest components of two vectors.
+返回一个由两个向量的最小组件组成的向量。
+Max
+Returns a vector that is made from the largest components of two vectors.
+返回一个由两个向量的最大组件组成的向量

@@ -1,0 +1,17 @@
+1.什么是IK？
+IK（Inverse Kinematics）即反向动力学，即可以使用场景中的各种物体来控制和影响角色身体部位的运动，一般来说骨骼动画都是传统的从父节点到子节点的带动方式（即正向动力学），而IK则倒过来，由骨骼子节点带动骨骼父节点，具体情况比如人物走路踩到了石头就需要由脚的子节点来带动全身骨骼做出踩到石头的响应。
+
+IK可以使人物和场景更加贴合，从而达到更加真实的游戏效果，如果大家玩过《波斯王子》或《刺客信条》系列，应该对主角的攀爬和飞檐走壁的能力印象深刻，这些都是应用了IK，使动画贴合到具体的场景中进行的表现。
+
+
+2.创建一个动画控制器，然后在动画窗口的图层面板中，单击图层的齿轮设置图标，并在弹出的菜单中选中IK复选框。
+控制IK的代码应该放置在OnAnimatorIK()中，
+//weight = 1.0 for the right hand means position and rotation will be at the IK goal (the place the character wants to grab)
+ //设置骨骼的权重，1表示完整的骨骼，如果是0.5哪么骨骼权重就是一半呢，可移动或旋转的就是一半，大家可以修改一下参数试试。
+animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
+animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1f);
+
+//设置右手根据目标点而旋转移动父骨骼节点
+animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandObj.position);
+animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandObj.rotation);
+

@@ -1,0 +1,4 @@
+1.OnBecameVisible() : 这个的意思是当物体在/进入摄像机会调用一次，类似触发器OnTriggerEnter(); 
+OnBecameInvisible() : 这个的意思是当物体离开摄像机会调用一次，类似触发器OnTriggerExit(); 
+当Cube身上的材质被渲染的时候调用OnBecameVisible，相反则调用OnBecameInvisible，在调用这两函数的时候可以进行相应的计算工作。
+如果发现并没有触发的话，是因为你脚本所在的物体没有渲染组件，所以没有调用，这一点很重要。

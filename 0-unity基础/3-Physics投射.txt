@@ -1,0 +1,19 @@
+1.Physics.SphereCastAll 所有球体投射
+static function SphereCastAll (origin : Vector3, distance : float = Mathf.Infinity, layerMask : int = kDefaultRaycastLayers) : RaycastHit[]
+Parameters参数
+
+originThe center of the sphere at the start of the sweep.
+在扫描起点的球体中心点。
+radiusThe radius of the sphere.
+球体的半径。
+directionThe direction into which to sweep the sphere.
+球体扫描的方向
+distanceThe length of the sweep
+扫描的长度
+layerMaskA Layer mask that is used to selectively ignore colliders when casting a capsule. 
+根据Layer mask层的不同来忽略碰撞体。 Returns
+RaycastHit[] - an array of all colliders hit in the sweep.
+返回扫描碰到所有碰撞体的数组。
+Description描述
+Like Physics.SphereCast, but this function will return all hits the sphere sweep intersects.
+和Physics.SphereCast 不同的是这个函数返回所有交互的碰撞体信息

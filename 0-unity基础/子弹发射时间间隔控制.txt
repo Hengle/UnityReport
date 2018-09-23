@@ -1,0 +1,27 @@
+1.主要有单个变量，Time.time:记录当前的时间
+float fireRate; //自己设置发射子弹的时间间隔
+float nextFire; //记录可以发射下一颗子弹的时间，用于与当前的时间做比较
+
+update()
+{
+   if(Input.GetButton("Fire1")&&Time.time > nextFire)
+      {
+           nextFire= Time.time + fireRate; //计算可以发射下一颗子弹的最早时间
+           //实例化子弹
+      }
+      //满足条件，发射下一颗子弹
+}
+
+2.第二种方法
+主要是利用了Time.deltaTime的连续性
+float fireRate=0.0f;
+update()
+{
+   fireRate-=Time.deltaTime;   //每一帧里递减fireRate的值，
+   if(Input.GetButton("Fire1")&&fireRate<=0)
+      {
+           fireRate=0.1f; //重置子弹的发射时间为0.1f
+           //实例化子弹
+      }
+      //满足条件，发射下一颗子弹
+}

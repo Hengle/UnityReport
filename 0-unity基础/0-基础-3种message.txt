@@ -1,0 +1,36 @@
+在unity的Component类中，封装了3种消息发送处理机制，接下来一起看一下他们的使用方法
+
+1.BroadcastMessage 广播消息
+
+function BroadcastMessage (methodName : string, parameter : object = null, options : SendMessageOptions = SendMessageOptions.RequireReceiver) : void
+
+描述 
+在游戏物体每一个MonoBehaviour和它的全部子物体上调用名为methodName的方法。 
+通俗的解释：BroadcastMessage朝当前物体和所有子物体发送消息。
+
+对一个物体及其所有子物体，进行消息的广播，如果其中任何子物体上贴有脚本，而脚本中有相应的处理此消息的函数，则Invoke调用之。
+
+接受消息的此方法（函数）可以通过设置没有引用参数表来忽略传过来的消息中的参数。如果选项Option中设置成了SendMessageOptions.RequireReceiver，那么当没有任何脚本组件接受此消息时，一个相应的错误会弹出来 
+注意：即使脚本组件被设置为不可用，也依然会调用其中的函数。
+
+2.SendMessage 发送消息
+
+function SendMessage (methodName : string, value : object = null, options : SendMessageOptions = SendMessageOptions.RequireReceiver) : void
+
+描述 
+SendMessage朝本级别物体的多个脚本发送信息,也就是向当前对象挂载的所有脚本上面发送消息。 
+在游戏物体每一个MonoBehaviour上调用名为methodName的方法。
+
+接受此消息的函数也可以没有参数。如果选项Option中设置成了SendMessageOptions.RequireReceiver，那么当没有任何脚本组件接受此消息时，一个相应的错误会弹出来
+
+
+
+3.SendMessageUpwards 向上发送消息
+
+function SendMessageUpwards (methodName : string, value : object = null, options : SendMessageOptions = SendMessageOptions.RequireReceiver) : void
+
+Description描述 
+SendMessageUpwards朝当前物体和上级父物体发送信息。 
+在游戏物体每一个MonoBehaviour和每一个behaviour的祖先上调用名为methodName的方法。
+
+接受此消息的函数也可以没有参数。如果选项Option中设置成了SendMessageOptions.RequireReceiver，那么当没有任何脚本组件接受此消息时，一个相应的错误会弹出来

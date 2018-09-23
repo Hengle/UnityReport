@@ -1,0 +1,1 @@
+1.Plane和Quad类似，区别在于Plane是XZ轴，Quad是XY轴。Plane大小为10乘以10，相当于200个三角形，Quad为1乘以1，相当于2个三角形。

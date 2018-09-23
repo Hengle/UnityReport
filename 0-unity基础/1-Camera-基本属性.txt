@@ -1,0 +1,29 @@
+首先介绍一下Camera的主要属性：
+1、Clear Flags （清除标记）
+    该属性有四个可选项，分别是SkyBox、SolidColor、DepthOnly、Don'tClear。
+    SkyBox(天空盒):在屏幕空白处显示当前摄像机的天空盒，如果没有指定天空盒，则会显示默认背景色。
+    SolidColor(固定颜色):空白处将显示默认此处设置的背景色。
+     DepthOnly(深度唯一):选用该模式后对象将不被裁剪。
+     Don'tClear(不清除):该模式下上一帧的缓存将不被清除。
+2、Background（背景颜色）
+    用于设置画面的默认背景颜色，ClearFlags在SkyBox、SolidColor模式下有效。
+3、CullingMask(遮罩剔除)
+    用于设置渲染的层（Layer）,这个属性我们后面会用到，大家可以先记一下。
+4、Projection(投影方式)
+    可以设置相机的在2D（(OtherGraphic)正交）和3D（（Perspective）透视）之间切换。
+5、FieldOfView（视野）
+    控制视野的大小，射击游戏中经常用到，例如：“吃鸡”中的8倍镜~你懂滴。
+6、CullingPlanes(裁剪平面)
+    控制Camera的渲染范围，Near被渲染的最近距离，Far被渲染的最远距离。
+7、ViewPort Rect(视口)
+    控制渲染画面的位置、大小，可实现分屏等效果。
+8、Depth(深度)
+    控制Camera的渲染顺序，值越小越先渲染。
+9、Rendering Path（渲染路径）
+    设定摄像机的渲染方法，有四个选项Use Player Settings、Vertex Lit、    Forward、DeferredLighting
+    UsePlayerSettings（应用Player设置）：使用Project Settings>Player中的设置
+    VertexLit（顶点光照）：将所有的对象做为顶点光照对象来渲染。
+     Forward（快速渲染）：摄像机将对所有对象按每种材质一个通道的方式来渲染。
+    DeferredLighting（延迟光照）：一种分离物体渲染和光照渲染的渲染方式。
+10、TargetTexture(目标纹理)
+    Camera渲染的图像输出的纹理，在官方的小地图案例中可以看到它的用法。

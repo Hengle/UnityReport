@@ -1,0 +1,8 @@
+1.AddForce()：对刚体施加一个指定方向的力
+AddTorque()：扭矩
+AddExplosionForce()：施加一个离心方向的力，力的值要很大才能有效果，500以上。
+AddForceAtPosition()：在指定的位置上施加一个力。
+AddRelativeForce()：以自身坐标系为参考施加力
+AddRelativeTorque()：以自身坐标系为参考施加扭矩。
+2.ForceMode常量:
+Force：施加持续力Impulse：施加瞬时力Acceleration：施加加速度VelocityChange：施加速度

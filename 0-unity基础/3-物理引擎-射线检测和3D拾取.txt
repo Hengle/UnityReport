@@ -1,0 +1,67 @@
+0.函数原型
+public static bool Raycast(Vector3 origin, Vector3 direction, float maxDistance = Mathf.Infinity, int layerMask = DefaultRaycastLayers, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal);
+Parameters
+
+public static bool Raycast(Ray ray, out RaycastHit hitInfo, float maxDistance = Mathf.Infinity, int layerMask = DefaultRaycastLayers, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal);
+
+origin	The starting point of the ray in world coordinates.
+direction	The direction of the ray.
+maxDistance	The max distance the ray should check for collisions.
+layerMask	A Layer mask that is used to selectively ignore Colliders when casting a ray.
+queryTriggerInteraction	Specifies whether this query should hit Triggers.
+
+Ray类的构造函数
+public Ray(Vector3 origin, Vector3 direction);
+
+1.void Start()
+    {
+        //以小球中心为起始点，前方为目标点创建一条射线
+        rays = new Ray(transform.position, Vector3.forward);
+    }
+    // Update is called once per frame
+    void Update () {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            //光线投射碰撞
+            //用来获取从raycast函数中得到的信息
+            RaycastHit hit;
+            //发射一条射线，当光线投射与任何碰撞器交叉时为真，否则为假。
+            if (Physics.Raycast(rays, out hit))
+            {
+                Debug.Log(hit.collider.name);
+            }
+        }
+    }
+
+2.3D拾取
+在场景中有一个Cube使用3D拾取的方法获取这个Cube，并拖动这个Cube。
+void Update () { if (Input.GetMouseButton(0))  {            
+Ray rays = Camera.main.ScreenPointToRay(Input.mousePosition);    
+RaycastHit hit;    
+if (Physics.Raycast(rays, out hit))  
+{ currentObject = hit.transform;    }      
+else  currentObject = null;
+
+//原理：先获得点击的坐标，然后根据cube平面的z值作为参考，将其转换为3D坐标，作为移动的目标点，然后再使用插值函数实现平滑移动
+Vector3 mp = Input.mousePosition;
+//计算物体平面和相机的距离，让后将其z值赋值给mp，mp得到之后，将mp的值转换为3d坐标，该坐标就是cube应该移动的目标位置。实际上可以理解为z值未改变，只是在物体的平面上移动到目标的x，y上。
+mp.z = (currentObject.position-Camera.main.transform.position).z;
+mouse3DPosition =Camera.main.ScreenToWorldPoint(mp);
+currentObject.position = Vetor3.Lerp(currentObject.position,mouse3DPosition,smooth*Time.deltaTime);
+if (Input.GetMouseButtonUp(0))        
+currentObject = null;   
+ } }
+
+3.RayCastHit类的部分属性：
+collider/rigidbody/transform :the collider was hit.
+distance/point : the distance from the ray's origin to the impact point.
+
+Ray属性：
+direction ：  The direction of the ray.
+origin ：  The origin point of the ray.
+方法：GetPoint	Returns a point at distance units along the ray.
+返回值：Vector3
+
+4.RaycastHit[] RaycastAll(Ray ray, float distance, int layerMask)
+
+   投射一条光线并返回所有碰撞，也就是投射光线并返回一个RaycastHit[]结构体

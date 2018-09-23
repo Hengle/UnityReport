@@ -1,0 +1,16 @@
+1.unity延时方法Invoke和InvokeRepeating
+MonoBehaviour里面有两个内置的延时方法
+
+Invoke(methodName: string, time: float): void;
+methodName:方法名
+time:多少秒后执行
+InvokeRepeating
+InvokeRepeating(methodName: string, time: float, repeatRate: float): void;
+methodName:方法名
+time:多少秒后执行
+repeatRate：重复执行间隔
+
+还有两个重要的方法：
+
+IsInvoking：用来判断某方法是否被延时，即将执行
+CancelInvoke：取消该脚本上的所有延时方法

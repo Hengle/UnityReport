@@ -1,0 +1,12 @@
+1.‘›Õ£±‡º≠∆˜£¨Debug.Break()	  //Pauses the editor.
+Debug.ClearDeveloperConsole()	//Clears errors from the developer console.
+
+2.ªÊ÷∆…‰œﬂ£¨public static void DrawRay(Vector3 start, Vector3 dir, Color color = Color.white, float duration = 0.0f, bool depthTest = true);
+ªÊ÷∆œﬂ∂Œ£¨public static void DrawLine(Vector3 start, Vector3 end, Color color = Color.white, float duration = 0.0f, bool depthTest = true);
+Parameters
+
+start	Point in world space where the line should start.
+end	Point in world space where the line should end.
+color	Color of the line.
+duration	How long the line should be visible for.
+depthTest	Should the line be obscured by objects closer to the camera?

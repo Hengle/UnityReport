@@ -1,0 +1,9 @@
+1.退出按钮-退出程序
+public void Quit () 
+	{
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+		#else
+		Application.Quit();
+		#endif
+	}

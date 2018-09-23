@@ -1,0 +1,5 @@
+1.Button
+可以重写以下四个函数
+OnMouseDown();OnMouseUp();OnMouseEnter();OnMouseExit();
+更换按钮的图片，通过获取SpriteRenderer组件，然后修改其sprite变量即可。
+鼠标的这四个函数是通过碰撞器进行检测的，所以还需要为按钮增加2d碰撞器组件才能正常运行。

@@ -1,0 +1,48 @@
+1.public static Vector3 RotateTowards(Vector3 current, Vector3 target, float maxRadiansDelta, float maxMagnitudeDelta);
+Parameters：
+current	The vector being managed.
+target	The vector.
+maxRadiansDelta	The distance between the two vectors in radians.//好像每次移动的最大弧度值
+maxMagnitudeDelta	The length of the radian.
+
+2.可以让源物体的朝向跟随目标物体进行旋转，类似相机的跟随算法，这里的RotateTowards提供了插值部分。
+public class ExampleClass : MonoBehaviour
+{
+    // The target marker.
+    Transform target;
+
+    // Angular speed in radians per sec.
+    float speed;
+
+    void Update()
+    {
+        Vector3 targetDir = target.position - transform.position;
+
+        // The step size is equal to speed times frame time.
+        float step = speed * Time.deltaTime;
+
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+        Debug.DrawRay(transform.position, newDir, Color.red);
+
+        // Move our position a step closer to the target.
+        transform.rotation = Quaternion.LookRotation(newDir);
+    }
+}
+
+3.public class ExampleClass : MonoBehaviour
+{
+    // The target marker.
+    public Transform target;
+
+    // Speed in units per sec.
+    public float speed;
+
+    void Update()
+    {
+        // The step size is equal to speed times frame time.
+        float step = speed * Time.deltaTime;
+
+        // Move our position a step closer to the target.
+        transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+    }
+}

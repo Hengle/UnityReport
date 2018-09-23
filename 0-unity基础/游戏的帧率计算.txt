@@ -1,0 +1,21 @@
+1.游戏的帧率计算
+	原理：用帧率更新周期内的总帧率除以总帧数得到更新周期内的平均帧率
+	代码实现：
+        function Update()
+        {   ++frames;   //frames记录游戏帧数
+
+            //计算deltatime
+            var newSample = Time.realtimeSinceStartup;  //记录当前时间
+            var deltaTime = newSample - lastSample;   //计算两帧之间的时间间隔
+            lastSample = newSample;  //修改lastSample的值
+
+            timeleft -= deltaTime; 
+            accum += 1.0/deltaTime;         //记录帧率之和
+
+            if(timeleft <= 0.0)
+            {   fps = accum/frames;         //获得帧率后，对数据进行初始化
+                timeleft = updateInterval;
+                accum = 0.0;
+                frames = 0;
+                ++gotIntervals;
+             }                 

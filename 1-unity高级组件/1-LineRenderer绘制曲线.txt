@@ -1,0 +1,1 @@
+1.每次点击鼠标都要重新实例化一个带有Line Renderer的物体，当鼠标拖动时，修改其positionCount，然后设置位置，注意index和点的数量之间相差1.

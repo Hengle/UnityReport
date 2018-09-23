@@ -1,0 +1,7 @@
+1.MeshRenderer组件
+GetComponent<MeshRenderer>().SetColor();
+GetComponent<MeshRenderer>().SetAlpha();
+
+2.按钮的三种状态对应的切换效果，unity提供了三种方式
+
+3.添加图片时必须先修改图片的类型。

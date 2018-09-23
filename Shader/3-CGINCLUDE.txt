@@ -1,0 +1,8 @@
+1.unity会把 CGINCLUDE 和 ENDCG 之间的代码插入到每一个pass中，已达到声明一遍，多次使用的目的。例如，可以在 CGINCLUDE 和 ENDCG 之间 定义多个 顶点和片段方法，在pass里只要写明 #pragma vertex 顶点方法名 #pragma fragment 片段方法名 即可，而不用写具体的函数实现。
+
+
+
+2.使用CgInclude文件来模块化Unity Shader。
+模块化shader就像模块化C语言一样，步骤如下
+a.创建一个文本文件，修改后缀.cginc
+b.文件内代码要用#ifndef#define#endif包起来防止重复引用，里面可以自定义一些常量、结构体和函数。

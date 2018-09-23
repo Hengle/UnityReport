@@ -1,0 +1,17 @@
+1.什么是CLR
+通用语言运行平台(Common Language Runtime，简称CLR)是微软为他们的.Net虚拟机所选用的名称。这是通用语言架构(简称CLI)的微软实现版本，它定义了一个代码运行的环境。CLR运行一种称为“通用中间语言”的字节码，这个是微软的通用中间语言实现版本。
+ 
+CLR运行在微软的视窗操作系统上。查看通用语言架构可以找到该规格的实现版本列表。其中有一些版本是运行在非Windows的操作系统中。
+
+2.以上定义至少包含以下几点信息：
+CLR是一个类似于JVM的虚拟机，为微软的.Net产品提供运行环境。
+CLR上实际运行的并不是我们通常所用的编程语言(例如C#、VB等)，而是一种字节码形态的“中间语言”。这意味着只要能将代码编译成这种特定的“中间语言”(MSIL),任何语言的产品都能运行在CLR上。
+CLR通常被运行在Windows系统上，但是也有一些非Windows的版本。这意味着.Net也很容易实现“跨平台”。(至于为什么大家的印象中.Net的跨平台性不如Java，更多的是微软商业战略导致的)
+
+
+3.CLR和.Net Framework的关系
+
+ .NET框架
+ （.NET Framework） 是由微软开发，一个致力于敏捷软件开发（Agile software development）、快速应用开发（Rapid application development）、平台无关性和网络透明化的软件开发平台。.NET框架是以一种采用系统虚拟机运行的编程平台，以通用语言运行库（Common Language Runtime）为基础，支持多种语言（C#、VB.NET、C++、Python等）的开发。
+由此可见，.Net Framework是一个支持多种开发语言的开发平台，而这种多语言支持的特性又要以CLR为基础。CLR是一个.Net产品的运行环境。公共语言运行时(Common Language Runtime)和 .Net Framework 类库(FCL)是.Net Framework的两个主要组成部分。
+

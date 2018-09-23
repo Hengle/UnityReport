@@ -1,0 +1,7 @@
+1.canvas画布是unity提供的游戏对象之一，所有的ui元素都必须位于canvas之下，成为其子对象。
+canvas拥有的是Rect Transform组件，而不是Transform组件，不可以直接修改该最近的值，系统会根据画面大小自行设置。
+一个场景中可以有多个canvas对象。
+2.canvas组件的三种渲染模式
+screen space-overlay:ui元素置于画面最表层，可以根据画面分辨率自动调节位置。
+screen space-camera:可以设置渲染ui元素的相机，即可以为其指定一个不同于主摄像机的专用摄像机render camera。
+world space:如果设置为该选项，则可以向场景内的其他游戏对象直接添加ui元素。该模式下的canvas，不受Rect Transform对象的影响，而受相应游戏对象位置的影响。

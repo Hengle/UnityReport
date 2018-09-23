@@ -1,0 +1,24 @@
+1.动态障碍物 Nav Mesh Obstacle
+取消勾选navigation static选项，添加Nav Mesh Obstacle组件
+实际开发中使用动态障碍物功能时，会遇到一种情况：怪兽面前正好有一些紧密排列的动态障碍物时，会想要通过计算最短路径直接穿过这些动态障碍物，而不是绕过，而且如果穿不过去，就会卡住。
+解决办法：勾选carve选项，导航网格会在游戏运行过程中实时烘焙。
+通过修改carve的属性设置，尽可能减少负荷。
+
+2.通过Navigation自动分离网格链接
+将需要进行网格链接的游戏对象勾选Navigation static和off mesh Link generation，同时烘焙时勾选Generate OffMesh Links选项
+注意：这个也可以是单向和双向的，如果是想把A链接到B，那么只需要为A勾选Navigation static，然后路径的方向只能是从A到B，而不能从B到A，如果想要从B到A，那么也需要为B进行相应的设置。
+
+3.自定义分离网格链接
+首先取消Generate OffMesh Links勾选，重新烘焙，删除之前自动生成的分离网格链接。
+对slope模型添加Off Mesh Link组件，并设置start和end属性，start和end是两个transform类型的变量，所以一般可以创建两个空物体，然后将其移动到自己需要的位置，再把两个物体拖动到属性面板中。
+分离网格链接是双向的，，Bi Directional，控制单向和双向，勾选时为双向。
+Activated：在游戏运行时激活/禁用分离网格链接
+Auto Update Positions:如果运行时链接的位置可能发生变化，勾选该选项可以保持链接。
+
+
+4.注意当改变寻路方式时，要对网格重新烘焙，不然，寻路网格还会是之前的，而不会自动重新烘焙。
+
+5.NavMeshLayers
+在导航面板的Areas窗口中可以定义新的导航图层，并为其定义成本。
+例如穿过水面的成本肯定要比桥梁高，所以两者应该有不同的导航图层。
+定义完之后，可以在object窗口设置Navigation Area。

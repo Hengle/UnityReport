@@ -1,0 +1,232 @@
+破解教程 ： http://www.ceeger.com/forum/read.php?tid=23396&fid=8
+
+基础教程
+【01】Unity3D零基础入门  链接： http://pan.baidu.com/s/1bMGhSM  密码：ksd1
+【02】Unity3D高级进阶教程 链接： http://pan.baidu.com/s/1bo5JdKz  密码：mcna
+【03】Unity3D游戏编程语言 链接： http://pan.baidu.com/s/1i44QRFv  密码：k87q
+【04】Unity3D游戏开发实战项目 链接： https://pan.baidu.com/s/1nvFiwLN  密码：hgjf
+
+【插件和shader视频教程】
+UI设计			 链接：http://pan.baidu.com/s/1mhUDTwc 密码：7vub			
+NGUI 4.0		 链接：http://pan.baidu.com/s/1bp4Ob87 密码：pons
+UGUI 5.0 		 链接：http://pan.baidu.com/s/1i5Cd2b7 密码：0m70
+Shaer 			 链接：http://pan.baidu.com/s/1boTAu8v 密码：bicg
+
+【视频】+【源码】
+秘密行动（潜入类）	 链接：http://pan.baidu.com/s/1bp0KrSV 密码：1ys9
+保卫萝卜（75课时）	 链接：http://pan.baidu.com/s/1slFkWVV 密码：bt0i
+3d海战 			 链接：http://pan.baidu.com/s/1jIahDQm 密码：vear
+unet多人联机游戏（5.3）  链接：http://pan.baidu.com/s/1hshDtVA 密码：5epn
+强联网MMOPRG格斗之王	 链接：http://pan.baidu.com/s/1qYfvm5e 密码：4z7h
+逃离地球（跑酷类）	 链接：http://pan.baidu.com/s/1qYwqgXY 密码：1ydf
+小十传奇		 链接：http://pan.baidu.com/s/1jI1mayi 密码：fn6x
+英雄联盟		 链接：http://pan.baidu.com/s/1eS8LD6a 密码：3lss
+
+【噩梦射手在线】
+https://www.bilibili.com/video/av3924410/
+
+【源码】
+天空盒子资源		 		http://pan.baidu.com/s/1gfnJ4LP
+75个unity 3d休闲小游戏源文件c 		http://pan.baidu.com/s/1i5rdmYD  密码：14cg
+大型游戏项目源码 			http://pan.baidu.com/s/1mhAY0WS    密码：pqyk	
+kbengine+unity3d球球大作战demo源码 	https://github.com/u3dkbe/kbengine_unity3d_balls
+(英文)Unity3d高级教程_高清_2D超级玛丽+3D超级马里奥+项目工程(3.3G) 完整项目源码+视频教程    http://pan.baidu.com/s/1dDgPfTf 
+
+
+
+Unity3D VR 教程：3.VR中的交互	http://pan.baidu.com/s/1eSJv2Mm		a54p
+如何为GearVR创建虚拟现实漫游 	http://www.manew.com/thread-106857-1-1.html
+http://blog.csdn.net/sherlockchang/article/details/51336901
+
+
+【插件清单】 
+2D_Toolkit_1.51     动画开发插件包 
+FingerGestures           触摸插件 
+ORK_Okashi_RPG_Kit       Unity3D角色扮演游戏开发工具包 
+uScript-Visual-Scripting-Tool-for-UnityEasyMotion2D       脚本插件 
+Playmaker_1.21                    可视化编程插件 
+RageSpline 
+EZ GUI 2 
+GlyphDesigner 142            字体插件 
+megafiers.unitypackage        变形插件，对各种物体任意变形 
+Unisky 1.2.6                      天空插件，方便的模拟各种天气 
+UnityScriptEditor               脚本插件，方便智能的编辑脚本 
+cave-run-3d-unity-game-starter-kit 
+EasyRoads3Dv1.8.1.unitypackage      寻路插件 
+chipoff-fracture-system           破碎特效插件 
+Enhanced Editor++ v2.1.unitypackage   编辑增强插件 
+GameCenter Plugin v1.2.unitypackage   链接到iphone游戏中心的插件 
+igui                      GUI插件 
+iTween-Visual-Editor        动画插件 
+MessageManager_1.1.1        消息插件 
+particle-system-collection    粒子效果插件 
+Dynamic Elements FX Pack      著名的效果插件 
+FX's+Collection            各种特效的集合，包括瀑布，雨雪，落叶等等40多个特效 
+Unity Shooter Engine  （Unity3D）U.S.E.射击游戏引擎 V1.7 
+RoadPathTool v1.1;RiverTool v1.1            寻路插件 
+SwipeControl.unitypackage                   滑动屏幕插件 
+FPS_Kit_for_3.0.unitypackage         
+City Damage.zip                           城市套件 
+MagicalEffects.unitypackage                魔幻特效插件，模拟各种好看的效果 
+Sprite manager.rar                          动画插件 
+Bitmap2Material.zip                           材质贴图插件 
+substance_designer_2_0_0.rar                     材质插件 
+Hard Surface Shaders Free and Pro .rar   硬表面着色器材质插件，各种材质轻松表现 
+ngui 1.82                      下一代的gui插件，比igui等好 
+TerrainToolkit              地形资源，包括各种树木等等 
+Ian S Explosion Pack        爆炸特效插件，模拟各种爆炸效果 
+TimelineFX.              时光粒子编辑器     可以编辑出各种粒子效果 
+Prime31_StoreKit_for_iPhone   著名的广告插件 
+Chickens Shader Bundle  shader包，包括各种材质shader 
+shatter toolkit切西瓜插件 
+QuestIt 
+match3starter   可以方便的制作各种游戏 
+easy unity3d timer   时钟插件 
+dungeon construction kit 
+characterkit-csharp2 角色游戏插件 
+GUIstyle 
+Enemies.unitypackage 
+Buoyancy toolkit.unitypackage 
+camera splat effects   镜头特效插件 
+cp morphing lab    人体变形插件 
+easy destructible wall    模拟墙倒塌的插件 
+mesh impack damage 
+shatter toolkit   著名的切西瓜插件，可制作水果忍者游戏 
+Ngui 1.65       著名的gui最新版 
+hard shaders pro 硬表面材质插件专业版 
+energfx           能量特效插件 
+edys vehicle physics 车辆游戏插件 
+etcetera.unitypackage 
+uscript 可视化编程插件 
+Landscapes+part+1.unitypackage 
+Landscapes+part+2.unitypackage 
+skybox-blue-nebula 
+skybox-set-01 
+EZ Game Saver.unityPackage 
+unity dialogue editor 
+prime31 著名的插件 
+Tom TerrianTool 地形编辑插件 
+3d anaglyph system  3d红绿插件 
+InventoryManager-js-cs  背包系统插件 
+soccertoolkit 足球插件 
+strumpyshadereditor 材编辑质插件 
+amplify shader manager  材质插件 
+unity external lightmapping tool外部灯光插件 
+Vectrosity向量划线工具 
+Mobile Movie Texture 移动设备视频贴图让您轻松使用Unity在移动设备上播放视频 
+ActionsHUD 
+Cartoon Clouds 卡通白云 
+HOTweenEditor_v0.2.101 
+人物模型02-贴图，骨骼，行走动画.unitypackage 
+镜像反射着色器 Mirror Reflection shader 
+火箭弹与烟火爆炸资源 
+高光贴图shader 
+飞船模型带贴图.unitypackage 
+二层房屋室内示例House of the Future example 
+爆炸效果 Detonator – Explosions for Unity3D 
+unity3d传奇冰咆哮魔法效果 
+Score Effect Script 
+Roidz Unity Custom Inputmanager v1.4自定义输入管理器 
+Battlefield 
+Camera Splat Effects 镜头溅斑效果 
+Car Physics 汽车物理引擎包 
+Fuz(毛发)shader 
+Head Look Controller –头部转向控制.unitypackage 
+JCar Unity3D开发的简单赛车游戏 
+Qualcomm AR –增强实境工具.unitypackage 
+Rope BETA 4.0 链子绳子脚本示例 
+《魔兽世界》角色控制.unitypackage 
+反向关节工具.unitypackage 
+目前小游戏流行的关卡系统 
+相当不错的完整的RPG源代码.unitypackage 
+血液飞溅特效Blood Splatter FX 
+3rd Pesron Shooter Kit 第三人称射击游戏包 
+AI 4 Enemies 人工智能.unitypackage 
+AI_4_Enemies教程. 
+Asylum 避难所，游戏室内场景项目资源 
+RTS 即时战略游戏原型 
+Ximista the Warrior （Unity3D制作的2D游戏）[含项目源码] 
+【Unity版MineCraft】很有意思的一个项目示例 
+一个简单行走控制资源包 
+创建像Evac City的游戏 
+清风房车特效演示材质光效动画 AirStream - Substance（含源码包.unitypackage 
+非常不错的shader包RNM_Shaders 
+
+Unity3D 200个插件
+  
+3rd Person CamKit for iPhone 
+Air Side-Scroller 
+A-Lab Software RapidUnity 
+Animated Soldier 
+Blind GUI 
+Crate Pack 
+Cubemaps HD 
+Day Night Cycle 
+Distance Tool 
+FaceAPI 
+Head Look Controller 
+Locator HUD v1.01 
+PlayMode Persist v1.5.1 
+Point-Click Cam Kit 
+RAINone v1.1.2 
+RapidUnity Light Library 
+RAYos 
+Sewerpack 
+Simple Waypoint System 
+Smart Crosshairs 
+Smart Tiles Vol1 
+Space Ship Starter Kit 
+Spells Pack v1 
+Stitchscape Script v1.5 
+lavarocks.unitypackage 
+Teleporter 
+Tropical Pack 
+TexturePacker 
+[示例源码]Multi TouchesDemo.unitypackage 
+Pocket RPG Weapon Trails 武器拖尾效果.unitypackage 
+Typewriter Speech Bubble 
+uScript_Beta_13 
+XPand+Game+Prototype 
+Bootcamp 官方示例单机版和Photon网络版 
+Forced Landing 太空飞船迫降游戏源码 
+UnityAwesomium 游戏中浏览网页 
+Forest Ground - 森林地形贴图.unitypackage 
+  
+Unitycar 
+BrainBuilder编写游戏无需代码.unitypackage 
+自定义角色换色 
+Extra_GUI_Skins 
+lavarocks.unitypackage 
+mouselookdb.unitypackage 
+Unity3D模拟制作陨石袭击地面或者炮弹落地成坑的效果 
+Tazman-Audio.Fabric.v1.22f.unitypackage 
+TerrainEdge地形包 
+tower_Defense.unitypackage 
+Unity3D中实现简单的电影模式框架 
+Edit UV.unitypackage 
+地形示例项目，火山和磨房 
+场景管理，模型优化 
+地形阴影烘焙 
+树木管理器小插件.unitypackage 
+CloudsToy v1.2 
+FX Camera Systems（FX相机系统） 
+导出max模型为脚本文件的插件 
+反射渐变包 
+可以控制透明的shader 
+双面+透明通道+NormalMap+LightingMap+接收影子信息shader 
+文本转语音 
+智能工具扩展 
+Unity3D Ladders Example Project军事场景示例，有爬楼梯效果 
+RollTheBall很好的3d游戏 
+Shadow Gun-----五星级游戏源文件 
+Bumper Boats 碰碰船项目源码 
+Behave.unitypackage 
+Asset Store上的C# game示例.unitypackage 
+Press_Tilda游戏源码 
+NGUI常用3500中文字体 
+ShowSize 显示对象大小 ObjectSize 
+PacManClone游戏源码 
+cutsceneeditor0.1.unitypackage 
+unity_annosoft_demo.unitypackage 
+
+ http://pan.baidu.com/s/1ntCNTo9 eua3

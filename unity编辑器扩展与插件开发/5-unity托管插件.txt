@@ -1,0 +1,17 @@
+1.给第三方公司提供Unity插件，而又不希望第三方看到具体代码，这时就可以将核心代码编译成dll文件供第三方调用。或者说，同一个公司多个项目都用到某个模块，则可以把该模块封装成dll，方便在不同项目之间共用和维护。
+
+2.创建dll文件，
+打开VS，选择文件 -> 新建 -> 项目后打开新建项目对话框，选择C#类库
+
+怎么导入Unity原生类库呢？别急，接下来就说说怎么在自定义的dll类库中调用Unity中的类。
+首先选中项目，接着右键选择添加 -> 引用后，弹出引用管理器，点击浏览按钮，在unity安装目录里找到相应的dll文件，
+D:\Program Files\Unity\Editor\Data\Managed
+然后添加即可。
+
+3.dll文件创建完成后，直接在工程中新建plugins文件夹，将其导入即可，
+注意，调用Dll中的方法一定要使用using语句引入导入到unity中的dll类库。
+
+4.将MyLib项目目录下的bin/Debug目录下的MyLib.dll文件拷贝到Unity项目的Plugins目录下。这时，Unity控制台报Unhandled Exception: System.Reflection.ReflectionTypeLoadException: The classes in the module cannot be loaded的错误，报错详细信息如下：
+
+这是因为我用的Unity版本是5.3.4f1，支持的.NET Framework的版本为3.5。而我创建的MyLib项目的默认.NET Framework 3.5版本为4.5.2。
+选择项目，然后右键选择属性 -> 应用程序，将目标框架改为 .NET Framework 3.5或以下

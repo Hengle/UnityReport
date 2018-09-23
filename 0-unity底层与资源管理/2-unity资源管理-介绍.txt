@@ -1,0 +1,15 @@
+1.unity资源管理的三种方式
+Resources:开发时绝对方便，但Resources文件夹下的任何一点点修改都会导致该文件夹的重新打包。（Resources文件夹）
+Asset DataBase:编辑器模式下很方便，发布时要换成AssetBundle。（Assets文件夹）
+Asset Bundle:AssetBundle从第一天出生就不是给开发环境用的，如果要修改贴图，每一张都得打包再测试。
+Resource适合编辑器模式下使用，不适合热更，而Asset Bundle适合发布模式下使用，适合热更。
+
+2.Assets
+
+        为Unity编辑器下的资源文件夹，Unity项目编辑时的所有资源都将置入此文件夹内。在编辑器下，可以使用以下方法获得资源对象：
+
+        AssetDatabase.LoadAssetAtPath("Assets/x.txt"); 
+
+        注意：此方法只能在编辑器下使用，当项目打包后，在游戏内无法运作。参数为包含Assets内的文件全路径，并且需要文件后缀。 
+
+        Assets下的资源除特殊文件夹内，或者在会打入包内的场景中引用的资源，其余资源不会被打入包中。

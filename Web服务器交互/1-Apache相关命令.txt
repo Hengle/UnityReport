@@ -1,0 +1,6 @@
+1.安装Apache时要用管理员权限打开命令行，找到需要的目录---cd C:\Apache24\bin
+
+2.httpd -k install
+httpd -k start : 启动服务
+httpd -k restart : 重新启动服务
+

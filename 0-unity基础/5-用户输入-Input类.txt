@@ -1,0 +1,40 @@
+1.键盘的输入
+  Input.GetKey();  //长按有效
+  Input.GetKeyDown();  //按下按键即有效
+  Input.GetKeyUp();  //抬起按键有效
+  Bool Input.AnyKey();  //用于监听用户的任意按键输入或鼠标点击
+  Bool Input.AnyKeyDown();  //当任意按键松开时返回true。
+  Input.GetButton(string buttonName) //监听Button输入，参数为自己指定的button名字。
+  Input.GetButtonDown(string buttonName)
+  Input.GetButtonUp(string buttonName)
+  float Input.GetAxis()
+  Input.GetKeyDown(KeyCode.R)
+
+2.鼠标的输入（0，1，2分别对应鼠标左键、中键和右键）
+  Input.mousePosition //返回类型为Vector3，返回当前鼠标的位置，即距离原点的像素位置，Unity中的原点为左下角
+  Bool Input.GetMouseButton()  //对应的键长按时返回true
+  Bool Input.GetMouseButtonDown()  //对应的键按下时返回true
+  Bool Input.GetMouseButtonUp()  //对应的键抬起时返回true
+  Input.GetAxis("Mouse ScrollWheel");返回float。
+
+3.为什么返回值是-1~1 
+  把鼠标移到GetAxis上会显示返回值是float，这就是一个逐渐增加到最大或最小的值，让移动是逐渐增加到最大速度，有种阻力的感觉。
+正负是方向，可以在Unity的Edit/Porject Settings/Input里设置相关的东西，那个“Horizontal”就是里面的水平轴值。
+4. GetAxis 是个方法，需要传参数，参数为string类型，参数如下：
+    一：触屏类
+                   1.Mouse X                       鼠标沿着屏幕X移动时触发
+                   2.Mouse Y                       鼠标沿着屏幕Y移动时触发
+                   3.Mouse ScrollWheel             当鼠标滚动轮滚动时触发
+    二：键盘操作类
+                   1.Vertical                      对应键盘上面的上下箭头，当按下上或下箭头时触发
+                   2.Horizontal                    对应键盘上面的左右箭头，当按下左或右箭头时触发
+//刚体的运动应该在FixedUpdate中进行处理
+void FixedUpdate(){
+		float h = Input.GetAxis ("Horizontal");
+		float v = Input.GetAxis ("Vertical");
+
+		Vector3 movement = new Vector3 (h*speed,0,v*speed);
+		GetComponent<Rigidbody> ().velocity = movement;
+
+	}
+//函数每次刷新时都会检测按键输入，向左为正，向右为负，无按键结果为0，所以当停止按键时，刚体的速度会为0，即停下。

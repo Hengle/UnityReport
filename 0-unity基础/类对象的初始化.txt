@@ -1,0 +1,14 @@
+private GameController gameController;
+
+void Start(){
+		GameObject go = GameObject.FindWithTag ("GameController");
+		if (go != null)
+			gameController = go.GetComponent <GameController > ();
+		else
+			Debug.Log ("找不到tag为GameController的对象");
+		if(gameController == null)
+			Debug.Log ("找不到脚本GameController.cs");
+	}
+
+这里的类对象的初始化比较繁琐，
+首先要找到对应的游戏对象（FindWithTag（）），再找到对象对应的组件（GetComponent<classname>（））

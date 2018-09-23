@@ -1,0 +1,10 @@
+1.原理
+即Mask是利用了GPU的模板缓冲来实现的，关于模板，打个简单的比方，就像一个面具，可以挡住一部分“脸”的显示一样。Mask的关键代码其实只有一行，如下（为方便理解，对代码做了简化处理）：
+
+var maskMaterial = StencilMaterial.Add(baseMaterial, 1, StencilOp.Replace, CompareFunction.Always);
+它的作用是为Mask对象生成一个特殊的材质，这个材质会将StencilBuffer的值置为1。同样的，在UI的基类 MaskableGraphic 中，有这样一行关键代码（为方便理解，对代码做了简化处理）：
+
+var maskMat = StencilMaterial.Add(baseMaterial, 1, StencilOp.Keep, CompareFunction.Equal, 1, 0);
+它的作用是为MaskableGraphic生成一个特殊的材质，这个材质在渲染时会取出StencilBuffer的值，判断是否为1，如果是才进行渲染。
+
+2.在父子关系下，Mask下的子物体会被遮掩，而同级或Mask的父亲不会被影响。

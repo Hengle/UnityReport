@@ -1,0 +1,2 @@
+1.using UnityEngine.SceneManagement;
+SceneManager.LoadScene();

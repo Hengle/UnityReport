@@ -1,0 +1,54 @@
+1.Resources
+
+资源载入
+
+        Assets下的特殊文件夹，此文件夹内的资源将会在项目打包时，全部打入包内，并能通过以下方法获得对象：
+
+        Resources.Load("fileName"); 
+
+        Resources.Load("fileName"); 
+
+        注意：函数内的参数为相对于Resource目录下的文件路径与名称，不包含后缀。Assets目录下可以拥有任意路径及数量的Resources文件夹，在运行时,Resources下的文件路径将被合并。
+
+        例：Assets/Resources/test.txt与 Assets/TestFloder/Resources/test.png在使用Resource.Load("test")载入时，将被视为同一资源，只会返回第一个符合名称的对象。如果使用Resource.Load(“test”)将返回text.txt；
+
+        如果在Resources下有相同路径及名称的资源，使用以上方法只能获得第一个符合查找条件的对象，使用以下方法能或得到所有符合条件的对象：
+
+Object[] assets = Resources.LoadAll("fileName"); 
+
+TextAsset[] assets = Resources.LoadAll("fileName"); 
+
+ 
+2.相关机制
+        在工程进行打包后，Resource文件夹中的资源将进行加密与压缩，打包后的程序内将不存在Resource文件夹，故无法通过路径访问以及更新资源。
+
+        依本文2.3章节所述，在程序启动时会为Resource下的所有对象进行初始化，构建实例ID。随着Resource内资源的数量增加，此过程耗时的增加是非线性的。故会出现程序启动时间过长的问题，请密切留意Resource内的资源数量。
+
+
+3.卸载资源
+        所有实例化后的GameObject 可以通过Destroy函数销毁。请留意Object与GameObject之间的区别与联系
+
+Object可以通过Resources中的相关Api进行卸载
+
+Resources.UnloadAsset(Object);//卸载对应Object 
+
+Resources.UnloadUnusedAssets();//卸载所有没有被引用以及实例化的Object 
+
+        注意以下情况：
+
+Object obj = Resources.Load("MyPrefab"); 
+
+GameObject instance = Instantiate(obj) as GameObjct; 
+
+...... 
+
+Destroy(instance); 
+
+Resources.UnloadUnusedAssets(); 
+
+        此时UnloadUnusedAssets将不会生效，因为obj依然引用了MyPrefab，需要将obj = null，才可生效。
+
+4.如果把资源放入了Resources文件夹，它们就会被包括到你的构建中。
+Resources提供了即时加载机制，例如：当资源从场景中被直接引用时，在场景启动之前就会被加载到内存中。庆幸的是，玩家不会经历由于场景加载（伴随一些小的异常）导致的帧率下降，因为场景资源的初始化都在场景启动前完成。代价当然是需要时间来加载这些资源，但有时也许是不可接受的。
+解决方案：首先从场景中移除所有纹理的引用，然后把图片放到Resources/LoadingImages目录。
+Resources 文件夹只有在真正需要的时候才去用。即时加载资源会使FPS 下降，间接依赖关系会使工作更加困难。

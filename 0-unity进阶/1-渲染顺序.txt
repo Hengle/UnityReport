@@ -1,0 +1,6 @@
+1.Unity中的渲染顺序自上而下大致分为三层。 最高层为Camera层，可以在Camera的depth那里设置，设置之后，图形的渲染顺序就是先绘制depth低的相机下的物体，再绘制depth高的相机下的物体，也就是说，depth高的相机会覆盖depth低的相机（具体的覆盖关系有don't clear， solid color等等几种）
+
+比Camera层稍低一层的是sorting layer层， 随便找一个可以设置sorting layer的地方，选择sorting layer，点添加按钮，就可以看到当前所有的sorting layer，并且可以更改sorting layer的顺序，排位靠后的sorting layer会覆盖排位靠前的sorting layer。 设置好sorting layer的相互关系之后，就可以给任何一个继承于Renderer类，或者有renderer的子类作为field的对象设置sorting layer了。 注意这些sorting layer的遮挡关系是在同一个camera的层级下的。 不同camera下的renderer渲染顺序以camera的depth为准。 有的component的sorting layer可以直接在unity editor里面设置，比如Sprite Renderer。 有的则需要用代码来设置，比如设置Particle system的sorting layer， 就需要在代码中取到 ParticleSystem.Renderer.SortingLayer 来进行设置。
+SortingLayer 拥有最高优先级，如果 SortingLayer 不同，则首先按照 SortingLayer 排序；如果 SortingLayer 相同，再按照 RenderQueue 排序。
+
+比sorting layer再低一层的是sorting order， 这个数字指代的是在同一个sorting layer下的渲染顺序，

@@ -1,0 +1,5 @@
+1.Quaternion.LookRotation(target.transform.position);
+public static Quaternion LookRotation(Vector3 forward, Vector3 upwards = Vector3.up);
+
+例子：Quaternion rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(relativePos.normalized), Time.deltaTime);
+在此例中，源物体的z轴的方向和目标物体的位置向量是一致的。

@@ -1,0 +1,25 @@
+1.这里包含了最常使用的帮助函数、宏和结构体。
+
+2.UnityCG.cginc中一些常用的结构体
+appdata_base:(用于顶点着色器的输入)，包含变量：顶点位置、顶点法线、第一组纹理坐标
+appdata_tan:(用于顶点着色器的输入)，包含变量：顶点位置、顶点切线、顶点法线、第一组纹理坐标
+appdata_full:(用于顶点着色器的输入)，包含变量：顶点位置、顶点切线、顶点法线、四组（或更多）纹理坐标
+appdata_img:(用于顶点着色器的输入)，顶点位置，第一组纹理坐标
+v2f_img:(用于顶点着色器的输出)，裁剪空间中的顶点坐标、纹理坐标
+
+3.常用的帮助函数，注意这些方向的其实位置都是模型空间的顶点
+float3 WorldSpaceViewDir(float4 v):  输入一个模型空间的顶点位置，返回世界空间中从该点到摄像机的观察方向。
+float3 ObjSpaceViewDir(float4 v):  输入一个模型空间的顶点位置，返回模型空间中从该点到摄像机的观察方向。
+float3 WorldSpaceLightDir(float4 v):  仅用于前向渲染中，输入一个模型空间的顶点位置，返回世界空间中从该点到光源的光照方向，没有归一化。
+float3 ObjSpaceLightDir(float4 v):  仅用于前向渲染中，输入一个模型空间的顶点位置，返回模型界空间中从该点到光源的光照方向。，没有归一化
+float3 UnityObjectToWorldNormal(float3 normal)：把法线方向从模型空间转换到世界空间
+float3 UnityObjectToWorldDir(float3 dir)：把方向向量从模型空间变换到世界空间中
+float3 UnityWorldToObjectDir(float3 dir)：把方向向量从世界空间变换到模型空间中
+UnityObjectToClipPos:将顶点坐标转换为裁剪空间
+
+4.宏
+TRANSFORM_TEX(tex,name)  //第一个是顶点的纹理坐标，第二个是纹理名
+MainTex_ST:
+MainTex_TexelSize:unity提供的用来访问xxx纹理对应的每个纹素的大小，如一张512x512大小的纹理，该值为1/512，在卷积中，我们需要对相邻区域内的纹理进行采样，就需要使用TexelSize计算各个相邻区域的纹理坐标。
+
+

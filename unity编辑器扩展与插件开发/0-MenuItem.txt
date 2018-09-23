@@ -1,0 +1,48 @@
+1.为了要在顶层工具栏中创建一个新的菜单项，你必须去创建一个编辑器脚本（在项目Editor目录下的一个脚本）。此菜单项需要是一个静态的方法且必须使用MenuItem属性来标识。
+可以自己创建新的菜单，添加菜单项，也可以在已有菜单下创建菜单项
+using UnityEditor;
+//首先要添加命名空间
+[MenuItem("Tools/Clear")]
+[MenuItem("Windows/Maximize")]
+
+MenuItem三个参数 menuItem / isValidateFunction / priority
+
+2.快捷键
+
+为了使超级用户和喜欢使用键盘的用户工作的更快捷，我们可以为新的菜单项关联一个快捷键-使用快捷键的组合将自动的启动他们菜单项。 
+下面是被指定的键（它们也可以组合起来使用）：
+
+%-CTRL 在Windows / CMD在OSX
+# -Shift
+& -Alt
+LEFT/RIGHT/UP/DOWN-光标键
+F1…F12
+HOME,END,PGUP,PDDN
+
+[MenuItem("Tools/Item2 #&g")]
+[MenuItem("Tools/Item2 %g")]
+[MenuItem("Tools/Item2 _g")]
+
+3.有些菜单项仅在指定的情况下才可用，否则就应该被禁用。根据它的上下文添加一个验证方法来启用/禁用一个菜单项。 
+验证方法是一个静态的，并使用MenuItem属性标记的一个方法，且此属性传递true作为一个验证参数。 
+这个验证方法应该和菜单的命令方法有相同的路径，并且要有一个boolean的返回值，用以确认菜单是否被激活或者禁用。 
+isValidateFunction is used to make a MenuItem function as one that will be executed before a script function with the same itemName argument. The second argument is boolean. If this argument is set to true it will mark the associated function as one that is called before the execution of the second script function. This second script function with the same itemName will be executed next.
+
+        [MenuItem("Assets/ProcessTexture", true)]
+	private static bool NewMenuOptionValidation()
+	{
+		// This returns true when the selected object is a Texture2D (the menu item will be disabled otherwise).
+		return Selection.activeObject.GetType() == typeof(Texture2D);
+	}
+
+	[MenuItem("Assets/ProcessTexture")]
+	private static void DoSomethingWithTexture()
+	{
+		Debug.Log ("texture");
+	}
+
+4.CONTEXT/ComponentName - 菜单项将出现在给定组件的上下文菜单（右键单击显示的菜单）中。
+[MenuItem("CONTEXT/Rigidbody/New Option")]
+private static void NewOpenForRigidBody()
+{
+}

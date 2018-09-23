@@ -1,0 +1,6 @@
+1.主要包含文件
+UnityCG.cginc:包含了最常使用的帮助函数、宏和结构体。
+UnityShaderVariable.cginc:在编译Unity Shader时，会被自动包含进来，包含了很多内置的全局变量等。
+Lighting.cginc:包含了很多内置的光照模型，如果编写Surface Shader的话，会自动包含进来。
+HLSLSupport.cginc:在编译Unity shader时会被自动包含，声明了很多用于跨平台编译的宏和宏定义。
+

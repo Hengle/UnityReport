@@ -1,0 +1,24 @@
+1.在调用Instantiate()方法使用prefab创建对象时，接收Instantiate()方法返回值的变量类型必须和声明prefab变量的类型一致，否则接收变量的值会为null.
+比如说，我在脚本里面定义:
+public GameObject myPrefab;
+那么在使用这个myPrefab做Instantiate()的时候，接收返回值变量的类型也必须是GameObject,如下：
+GameObject newObject = Instantiate(myPrefab) as GameObject;
+注意Instantiate()后面的as也要是GameObject。
+
+2.实例
+void Start () {
+//		for (int i = 0; i < 20; i++) {
+//			
+//			GameObject cap = Instantiate (go) as GameObject;
+//			cap.transform.Translate (2*i+2,0,0);
+//			Debug.Log (cap.name);
+//		}
+		for (int i=0;i<20;i++){
+			GameObject cap;
+			Vector3 pos=go.transform.position;
+			pos.x+=2*i+2;
+			cap=Instantiate (go,pos,go.transform.rotation);
+			Debug.Log(cap.name);
+		}
+	}
+

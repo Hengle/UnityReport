@@ -1,0 +1,53 @@
+1.什么是序列化
+序列化是将对象状态转换为可保持或传输的格式的过程。与序列化相对的是反序列化，它将流转换为对象。这两个过程结合起来，可以轻松地存储和传输数据。简单的说就是把对象转换成字节然后到内存中，数据库中或者是文件中的一个过程。
+根据Unity的官方定义，序列化就是将数据结构或对象状态转换成可供Unity保存和随后重建的自动化处理过程。
+序列化可以用于跨平台。实际上就是把一段数据翻译成（序列化）比较底层的语言（如汇编、机器语言），而基于这个底层语言再可以翻译（反序列化）成多种上一层的语言。
+序列化又称串行化，是.NET运行时环境用来支持用户定义类型的流化的机制。其目的是以某种存储形式使自定义对象持久化，或者将这种对象从一个地方传输到另一个地方。
+简单来说就是将对象保存到文件中。如Unity的场景文件和预制体默认就是以二进制的文件保存在工程目录下。
+
+可以说Unity编辑器很大程度上是建立在序列化系统之上的，一般来说，编辑器不会去直接操作游戏对象，需要与游戏对象交互时，先触发序列化系统对游戏对象进行序列化，生成序列化数据，然后编辑器对序列化数据进行操作，最后序列化系统根据修改过的序列化数据生成新的游戏对象。
+
+就算不需要与游戏对象交互，编辑器本身也会不断地对所有编辑器窗口触发序列化。如果在制作插件时没有正确地处理序列化甚至忽略序列化系统的存在，做出来的插件很可能会不稳定经常报错，导致数据丢失等后果。
+
+注意：并非所有的公有变量都是可以被序列化的。其中const，static是静态的，属于类而非对象，无法序列化。链表和字典在内存中的存储是不连续的，也无法序列化。
+
+2.通过C#二进制方法实现序列化和反序列化
+[Serializable]
+public class DemoClass
+{
+    public int _id;
+    public string _myName;
+    public DemoClass(int id, string myName)
+    {
+        _id = id;
+        _myName = myName;
+    }
+    public DemoClass()
+    {
+    }
+    public void Output()
+    {
+        Debug.LogError(_id);
+        Debug.LogError(_myName);
+    }
+}
+
+void WriteTest()
+{
+    DemoClass demo = new DemoClass (100, "RCD");
+    FileStream fs = new FileStream ("demo.bin", FileMode.OpenOrCreate);
+    BinaryFormatter bf = new BinaryFormatter ();
+    bf.Serialize (fs, demo);
+    fs.Close ();
+    Debug.LogError ("write done");
+}
+
+void ReadTest()
+{
+    FileStream fs = new FileStream("demo.bin", FileMode.Open);
+    BinaryFormatter bf = new BinaryFormatter();
+    DemoClass demo = bf.Deserialize(fs) as DemoClass;
+    fs.Close();
+    demo.Output();
+}
+注意：二进制方法可以序列化私有变量，不能序列化被[NonSerialized ]修饰的变量且类需要被[Serializable ]标识。

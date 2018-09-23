@@ -1,0 +1,11 @@
+0.UnityShaderVariables.cginc:这里包含unity内置的用于空间变换和摄像机以及屏幕参数的内置变量
+
+1.变换矩阵
+UNITY_MATRIX_MVP：当前的模型观察投影矩阵，用于将顶点/方向矢量从模型空间变换到裁剪空间，模型空间到世界空间到观察空间到投影空间。
+UNITY_MATRIX_V / UNITY_MATRIX_P / UNITY_MATRIX_MV / UNITY_MATRIX_VP
+_Object2World：当前的模型矩阵，用于将顶点/方向从模型空间变换到世界空间
+_World2Object：从世界空间到模型空间。
+
+2.摄像机和屏幕参数
+unity提供了一些内置变量让我们访问当前正在渲染的摄像机的参数信息。
+_WorldSpaceCameraPos：float3，该摄像机在世界空间中的位置。

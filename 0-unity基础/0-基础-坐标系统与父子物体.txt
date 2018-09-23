@@ -1,0 +1,15 @@
+1.position 和 localPosition
+    position是世界坐标中的位置，可以理解为绝对坐标 
+　　localPosition是相对于父对象的位置，是相对坐标，我们在transform栏看到的是相对坐标 
+　　如果对象是一级对象，position和localPosition是相同的。
+
+2.子物体的Transform属性都是相对于父节点的。
+  方向和大小都是相对的。比如 ：如果父节点的scale属性为（2，2，2），那么子物体相对父节点移动一个单位，就是在世界坐标系里移动两个单位。因为子物体相对世界坐标的scale也是2。
+
+使用代码设置子物体
+例如将cube1设置为cube2的子物体
+cube1.transform.parent=cube2.transform.
+
+3.transform属性
+自身坐标系
+  transform.forward  transform.right  transflorm.up  物体自身的x,y,z轴

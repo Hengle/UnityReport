@@ -1,0 +1,43 @@
+0.网格编程其实就是手动去创建网格顶点的各种信息，如顶点的坐标，纹理坐标，颜色，法线，切线等。
+
+1，顶点
+顶点是网格最基础的组成部分，可通过mesh.vertices获取和赋值。mesh.vertices是一个Vector3的数组，每个Vector3代表了此顶点在世界空间中的位置每个Vector3为此顶点与此游戏物体的相对坐标(local position)。顶点的位置，数量没有任何限制。几个同样的顶点可以组合成若干不同形状，不同数量的三角形。
+
+手动设置顶点：
+mesh = new Mesh ();
+Vector3[] v3s=new Vector3[3];
+v3s [0] = new Vector3 (0, 0, 0);
+v3s [1] = new Vector3 (0, 1, 0);
+v3s [2] = new Vector3 (1, 0, 0);
+mesh.vertices = v3s;
+
+2，由顶点组成三角形
+mesh.triangles决定了网格中的三角形的形状和朝向。triangles是一个int数组，此数组长度永远是3的倍数，每三个int代表的是由哪三个顶点并由什么顺序（朝向）来组成一个三角形，例如：
+
+手动设置三角形：
+
+        int[] index = new int[3];
+        index [0] = 0;
+        index [1] = 1;
+        index [2] = 2;
+        mesh.triangles = index;
+等号右侧的0,1,2表明网格中将会有一个以 mesh.vertices[0],mesh.vertices[1]，和mesh.vertices[2]组成的三角形。此三角形的形状有此三个顶点的位置决定，而它的朝向则由此三个顶点的旋转方向决定：逆时针方向为正对。
+
+3，法线
+给网格赋值顶点并组成三角形，将此网格赋值给场景中的meshfilter,meshrenderer就可以将此三角形渲染出来了， 
+但是法线并不一定是正确的，例如上面声明的三个顶点
+
+v3s [0] = new Vector3 (0, 0, 0);
+v3s [1] = new Vector3 (0, 1, 0);
+v3s [2] = new Vector3 (1, 0, 0);
+
+不论是由0-1-2还是2-1-0的顺序组成三角形，此三角形的法线总是指向z轴方向，在有光照的场景中会出现错误的效果，这里unity提供了一个方法：
+
+mesh.RecalculateNormals();
+
+此方法将会自动将每个顶点的法线调整到正确方向，既是与面的朝向一致。还提供了一个方法是：mesh.RecalculateBounds();。将会重新计算mesh.bounds，通过mesh.bounds可访问size,center等一些网格的属性。所以在将mesh赋值给meshfilter前需要先调用此两方法。
+
+4，UV
+uv是为了防止与xy混淆的另一种写法。u为x轴，v为y轴，最小值为0，最大值为1无数值限制（材质上的uv值一般是0-1，当进行采样的uv值大于1时会按取1的余数来计算）。uv值用处很多，例如材质texture的采样，也既是贴图。或是利用它的一些特性（范围0-1；同一个uv区域每个像素的uv值皆不同）进行GPU内的一些计算。
+
+当每个顶点被赋予uv值后，在片段着色阶段，片段着色器将会根据顶点的uv值将此三角形覆盖的每个像素的uv值进行自动插值。

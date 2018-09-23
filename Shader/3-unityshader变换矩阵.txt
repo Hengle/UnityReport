@@ -1,0 +1,51 @@
+mul函数
+mul函数，是表示矩阵M和向量V进行点乘，得到一个向量Z，这个向量Z就是对向量V进行矩阵变换后得到的值。 
+HLSL的mul函数接受mul(V, M)或mul(M, V),要注意通常HLSL要依DirectX计算(V * M)使用mul(V, M)的形式. 
+特别需要小心的是,V如果是float3,前后行列不等,违反HLSL规范,但shader编译也不报错,直接当成float4(V, 0)处理,而不是当成float4(V, 1).即mul(float3, M)中的float3被当成向量,而不是顶点. 
+Unity3d 中，若是OpenGL,用的应该是GLSL，mul方法是（M，V）。
+
+矩阵
+内置的矩阵（float4x4）：
+
+名称	说明
+UNITY_MATRIX_MVP	当前模型视图投影矩阵
+UNITY_MATRIX_MV	当前模型视图矩阵
+UNITY_MATRIX_V	当前视图矩阵
+UNITY_MATRIX_P	当前的投影矩阵
+UNITY_MATRIX_VP	当前视图投影矩阵
+UNITY_MATRIX_T_MV	模型视图矩阵的转置
+UNITY_MATRIX_IT_MV	模型视图矩阵的逆转置
+unity_ObjectToWorld	当前模型矩阵
+unity_WorldToObject	当前世界矩阵的逆矩阵
+这里要特别说明一下UnityObjectToClipPos（v.vertex)） 方法，官方网站上说明，在写Instanced Shader时，通常情况下并不用在意顶点空间转换，因为所有内建的矩阵名字在Instanced Shader中都是被重定义过的，如果直接使用UNITY_MATRIX_MVP，会引入一个额外的矩阵乘法运算，所以推荐使用UnityObjectToClipPos / UnityObjectToViewPos函数，它们会把这一次额外的矩阵乘法优化为向量-矩阵乘法。
+
+相机
+名称	类型	数值
+_WorldSpaceCameraPos	float3	世界空间相机的位置
+_ProjectionParams	float4	x = 1.0(或如果当前使用翻转投影矩阵渲染则为-1.0),y是相机的近平面,z是相机的远平面，w是1 / FarPlane
+_ScreenParams	float4	x是相机的渲染目标在像素里的宽度,y是相机的渲染目标在像素里的高度,z是1.0 + 1.0 /宽度和w是1.0 + 1.0 /高度
+_ZBufferParams	float4	用于线性化Z缓冲区的值。x(1-far /near),y(far/near)、z(x /far)和w(y /far)
+unity_OrthoParams	float4	x是正交的相机的宽度,y是正交的相机的高度,z是未使用的，为正交的相机时w为1.0,透视相机时w为0.0
+unity_CameraProjection	float4x4	摄像机的投影矩阵
+unity_CameraInvProjection	float4x4	摄像机的投影矩阵的逆矩阵
+unity_CameraWorldClipPlanes[6]	float4	相机锥平面世界空间方程，按顺序为：左、右、底部、顶部、近、远
+光照
+名称	类型	数值
+_LightColor0(Lighting.cginc中声明)	fixed4	光照颜色
+_worldspacelightpos0	float4	方向光:(世界空间方向,0)。其他光:(世界空间位置,1)
+_LightMatrix0(AutoLight.cginc声明)	float4x4	world-to-light矩阵。用于样品cookie 和衰减纹理
+unity_4LightPosX0、unity_4LightPosY0 unity_4lightposz0	float4	(仅ForwardBase通道)前四个不重要的点光源的世界空间坐标
+unity_4lightatten0	float4	(仅ForwardBase通道)前四个不重要的点光源的衰减系数
+unity_lightcolor	half4[4]	(仅ForwardBase通过)前四个不重要的点光源的颜色数组
+在Shader的光照通道里的延迟着色和延迟光照（在unitydeferredlibrary.cginc）：
+
+名称	类型	数值
+_LightColor	float4	光照颜色
+_LightMatrix0	float4x4	world-to-light矩阵。用于样品cookie 和衰减纹理
+多光源下，最多8个光源在顶点通道，排序为从最亮的开始
+
+名称	类型	数值
+unity_LightColor	half4[8]	光照颜色数组
+unity_LightPosition	float4[8]	视图空间光源的位置。方向光源的坐标是（-方向，0）；（位置，1）用于点/点指示灯，点光源，聚光灯的坐标是（位置，1）
+unity_LightAtten	half4[8]	光源衰减的系数。X是cos(spotAngle/2)或非聚光灯为-1；Y为1／COS（spotangle / 4）或非聚光灯为-1；Z是衰减的二次方；W是正方形光源的范围
+unity_SpotDirection	float4[8]	视图空间聚光灯的位置；（0,0,1,0）则非聚光灯。

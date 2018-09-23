@@ -1,0 +1,4 @@
+1.内置变量
+UNITY_LIGHTMODEL_AMBIENT:得到环境光部分，fixed3 ambient=UNITY_LIGHTMODEL_AMBIENT.xyz;
+_LightColor0:该内置变量用来访问该pass处理的光源的颜色和强度信息（注意想要得到正确的值需要定义合适的LightMode标签）
+_WorldSpaceLightPos0:得到光源方向，需要注意的是，在这里，我们假设场景中只有一个光源且该光源是平行光。如果有多个光源并且类型可能是点光源等其它类型，就不能这么处理。

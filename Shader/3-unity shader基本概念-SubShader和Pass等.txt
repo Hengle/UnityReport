@@ -1,0 +1,48 @@
+1.shader就是：
+a.GPU流水线上一些可高度编程的阶段，而由着色器编译出来的最终代码是会在GPU上运行的。
+b.有一些特定类型的着色器，如顶点着色器、片元着色器。
+c.依靠着色器控制流水线的渲染细节。、
+
+2.unity shader定义了渲染所需的各种代码（如顶点着色器和片元着色器）、属性（如使用哪些纹理等）和指令（渲染和标签设置等），而材质则允许我们调节这些属性，并将其赋值给模型。
+
+3.ShaderLab是Unity提供的编写Unity Shader的一种说明性语言，它使用了一些嵌套在花括号内部的语义（syntax）来描述一个Unity Shader的结构，这些结构包含了许多渲染所需的数据。unity会把这些结构编译成真正的代码和Shader文件。
+
+4.unity shader的结构
+A.每个shader文件的第一行都需要通过shader语义来指定该Unity Shader的名字。通过在字符串中添加斜杠“/”可以控制Unity shader在材质面板中出现的位置。例如：Shader "Custom/MyShader" {  }
+
+B.材质和Unity Shader的桥梁:Properties
+Properties语义块中包含了一系列属性，这些属性将会出现在材质面板中，定义结构如下：
+Properties {
+	Name ("display name",PropertyType) = DefaultValue
+	Name ("display name",PropertyType) = DefaultValue
+}
+如果我们需要在Shader中访问它们，就需要使用每个属性的名字--Name，在unity中，这些属性的名字通常由一个下划线开始，显示的名称--display name则是出现在材质面板上的名字，我们需要为每一个属性指定其类型--PropertyType，我们还需要为每一个属性指定一个默认值，在我们第一次将该shader赋给材质时，材质面板就显示这些默认值。
+属性类型：Int、Float、Range这类数字类型属性，默认值为单独数字；Color、Vector3默认值为四元向量；2D、Cube、3D这三种纹理类型，默认值是通过一个字符串后跟一个花括号来指定的，字符串要么是空的，要么是内置的纹理名称，如"white"、"bump"等。
+
+C.SubShader
+每个shader文件包含一个或多个SubShader，unity加载shader时，会扫描所有的SubShader语义块，然后选择第一个能够在目标平台运行的SubShader，如果都不支持，会使用Fallback指定的unity shader。
+unity提供这种语义的原因是：不同的显卡有不同的能力，在旧的显卡上使用计算复杂度较低的着色器，高级显卡使用计算复杂度较高的。
+SubShader中定义了一系列Pass以及可选的状态--RenderSetup和标签设置--Tags。每个pass定义了一次完整的渲染流程，如果Pass数目过多，会造成渲染性能的下降。因此我们应该使用最小数目的pass。状态和标签同样可以在pass声明，但是如果在SubShader中进行了设置，那么将会应用于所有的pass，类似于“全局变量”。
+
+状态设置[RenderSetup]：常见的渲染状态设置选项，
+cull:  	Cull Back/Front/Off   设置剔除模式：剔除背面/正面/关闭剔除
+ZTest:   设置深度测试时使用的函数
+ZWrite:  Zwrite On/Off  开启/关闭深度写入
+Blend:  开启并控制混合模式
+
+SubShader的标签是一个键值对，它是SubShader和渲染引擎之间沟通的桥梁，它将告诉渲染引擎，我希望怎么样以及何时渲染这个对象。
+Queue:控制渲染顺序，指定该物体属于哪一个渲染队列。 Tags{"Queue"="Transparent"}
+RenderType:对着色器进行分类，例如这是一个不透明或透明的着色器等。  Tags{"RenderType"="Opaque"}
+
+unity支持一些特殊的Pass，以便进行代码复用或实现更复杂的效果，如UsePass和GrabPass。
+Pass语义块：可以使用UsePass命令来直接使用其他unity shader中的pass，如UsePass "MyShader/MYPASSNAME"，注意：由于unity内部会把所有的pass转换成大写字母表示，所以使用UsePass必须使用大写形式的名字。
+GrabPass：该pass负责抓取屏幕并将结果存储在一张纹理中，用于后续的Pass处理。
+
+5.unity shader的三种形式
+表面着色器--Surface Shader  unity会在背后把表面着色器转换成顶点/片元着色器，表面着色器实际上是顶点/片元着色器的更高一层的封装。表面着色器被定义在SubShader语义块。
+顶点/片元着色器--Vertex/Fragment Shader  顶点/片元着色器是写在Pass语义块。
+固定函数着色器--Fixed Function Shader  用在一些较旧的设备上。
+
+三种形式的选择：尽量使用可编程渲染管线的着色器，如果需要和很多光源打交道，使用表面着色器，如果光照数目非常少，使用顶点/片元着色器。
+
+unityshader和Cg/HLSL的关系，unity shader是用ShaderLab编写的，但是可以在ShaderLab内部嵌套Cg/HLSL来编写，这些Cg/HLSL代码是嵌套在CGPROGRAM和ENDCG之间的。通常Cg的代码是写在Pass语义块内的，即使是表面着色器，unity会在背后将其转化为一个包含多个Pass的顶点/片元着色器。

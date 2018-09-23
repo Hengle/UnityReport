@@ -1,0 +1,14 @@
+1.Unity中控制声音播放所需三个必要组件，分别是AudioSource、AudioClip、AudioListener，其作用如下：
+AudioSource—声音的控制组件，包含了控制声音播放、暂停、停止等方法。
+AudioClip—声音的源片段，即需要播放的声音对象。
+AudioListener—声音侦听器，没有它则无声音。
+
+audioSource.clip = audioClip; 
+
+2.void OnCollisionEnter(Collision other){
+		
+		//Debug.Log ("2222222222");
+		other.gameObject.GetComponent<AudioSource>().Play();
+		Destroy(gameObject);
+	}
+在打砖块游戏中，一开始把音效放在了砖块对象上，可是听不到声音，原因是碰撞后，砖块会立即销毁。

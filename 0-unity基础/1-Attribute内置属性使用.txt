@@ -1,0 +1,48 @@
+0.所有的这些属性设置只对离它最近的一个变量有效，例如如果想让多个私有变量显示在属性面板中，则需要对每个变量都设置可见属性。
+1.类对象型变量，未在inspector视图中出现，应该在该类添加可序列化属性，
+[System.Serializable]
+public class XXX{
+
+}
+[SerializeField]让私有变量出现在属性面板中
+[HideInInspector] 在变量之前加入这个属性，可以让public变量在Inspector中隐藏
+
+2.AddComponentMenu属性允许将一个脚本组件添加到Component->中
+
+3.RequireComponent()属性:添加对另一个Component的依赖，当class被添加到一个GameObject上的时候，如果这个GameObject不含有依赖组件，会自动添加相应组件，（通过代码添加，而不是在编辑器界面中）
+  	a.如果已经重复，则不能重复添加
+   	b.如果脚本已经挂载在游戏对象上，再去修改脚本添加RequireComponent()属性，将不会起作用。
+        c.该Component不可以通过编辑器中移除
+
+4.ContextMenu()属性允许添加一个命令到该脚本组件上，给脚本增加一个可以通过右键或点击设置图标来手动调用它
+[ContextMenu ("do1")]
+
+	void doOne(){
+		Debug.Log ("do one");
+	}
+   	a.一般用于函数，且是非运行状态下执行该函数。
+        b.可以用于调试
+do1按钮对应doOne()函数。
+
+ ContextMenuItem Attribute
+[ContextMenuItem ("reset","ResetName")] 对变量追加一个右键菜单，通过点击菜单，调用相应函数,
+reset按钮，对应ResetName()函数
+
+5.Multiline属性用于给string类型的变量添加多行输入，类似于文本
+
+6.Tooltip属性用于在属性面板中，当鼠标悬停在变量名上时，为其添加指定的显示，（相当于网页中的提示文本的作用）
+
+7.DisallowMultipleComponent
+对一个MonoBehavior的子类使用这个属性，那么在同一个GameObject上面，最多能添加一个该Class的实例。
+如果不加入这个属性，则可以将脚本组件无限加入同一个对象上。
+
+8.Header 属性
+[Header("生命值")] 为一组变量添加一个标题。
+Space属性 可以在Inspector上添加变量之间的ui间距。
+[Space(10)];
+
+9.Range属性
+[Range(0,100)] public int hp;
+
+10.[ExecuteInEditMode]
+通常，一个脚本仅会在play模式下运行。而添加了这个声明后，我们的脚本就可以进行一些回调函数，即使Unity并不是在play模式下。

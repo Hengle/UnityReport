@@ -1,0 +1,2 @@
+1.EventSystem对象包含EventSystem组件，该组件中的first selected属性可以设置哪个ui元素将会第一个获得焦点。
+该对象作用：将系统中发生的键盘、游戏杆、触摸屏等输入信息传递给canvas的ui元素并执行相应动作。

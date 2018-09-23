@@ -1,0 +1,3 @@
+1.粒子对象的销毁
+//duration是其粒子的持续时间，在其持续时间的基础上加上0.2秒再消失。
+Destroy(gameObject,gameObject.GetComponent<ParticleSystem>().duration+0.2f);
