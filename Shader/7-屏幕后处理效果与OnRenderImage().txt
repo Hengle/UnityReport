@@ -1,8 +1,8 @@
-1.�������ʹ�ü�����ʱ����
-���ȣ�������������Ľű����븽����һ������ϣ�
-��Σ�һ����д������������������������ʱ����������������������Լ��йص�ȫ����Ⱦ�󣬼����������Ⱦ������¸���ǰRenderBufferʱ����һ�̡�
+1.函数如何使用及调用时机？
+首先，包含这个函数的脚本必须附着在一个相机上；
+其次，一旦重写这个函数，这个函数所发生的时机，就是在这个相机完成与自己有关的全部渲染后，即将把这次渲染结果更新给当前RenderBuffer时的那一刻。
 
-2.ע�⣬�������д�����������������һ�������������ݸ�dest�Ĳ�����������Graphics.Blit(rt,  dest)�����û������������������󣬾�����������RenderBuffer�н�����һƬ��ڡ�
+2.注意，如果你重写了这个函数，必须有一个将缓冲区传递给dest的操作，即调用Graphics.Blit(rt,  dest)。如果没有这个操作，可以想象，经过这个相机后，RenderBuffer中将会是一片漆黑。
 
-3.���Խ�graphic.blit����֮��õ���������ֵ��������������������͵����ݣ�ʹ��material.setTexture
-Graphic.Blit(src,dst,material,index);  //ע�⣬���ǰ�src��Ϊһ���������ݸ�material�еĵ�һ���������͵����ݣ������������������ڶ����������Ͳ�����Blit�������롣
+3.可以将graphic.blit处理之后得到的纹理赋值给其它材质里的纹理类型的数据，使用material.setTexture
+Graphic.Blit(src,dst,material,index);  //注意，它是默认把src作为一张纹理传递给material中的第一个纹理类型的数据，如果定义了两个，则第二个纹理类型不能由Blit函数传入，如果第二个pass用的纹理是第一个pass处理后的，那么就可以把第二个pass的纹理和第一个pass的纹理设置为同一个，然后第一个pass处理后的屏幕纹理就会自动继续用在第二个pass上，如果是想传入自己需要的纹理，就需要用Material::SetTexture()函数。
