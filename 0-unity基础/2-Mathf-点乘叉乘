@@ -1,0 +1,4 @@
+1.点乘判断角度，点乘也有判断方向的作用；叉乘判断方向。
+示例：可以判断目标物体是否在我的前方;
+Vector3.Dot(transform.forward, Target.position-transform.position)大于零表示在我前面，小于零表示在我后面 等于零表示在我正左边或者正右边。
+Vector3.Cross(transform.forward, Target.position - transform.position).y  大于零表示在右边，小于零表示在我左边 等于零表示在我正前方或者正后方。
