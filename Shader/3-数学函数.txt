@@ -1,4 +1,4 @@
 1.三角与反三角函数
-sin,cos,tan用的都是弧度制，即0-360
+sin,cos,tan用的都是弧度制，
 asin,acos,atan返回的都是弧度制，即pi
 弧度制与角度制之间的转换需要用degrees和radians两个函数，degrees将反三角的弧度转换为角度。
