@@ -1,3 +1,19 @@
-1.AssetBundle��һ�ִ洢��Դ���ļ���ʽ�������Դ洢����һ��unity�����ܹ�ʶ�����Դ��Ҳ�ܹ�������û��Զ���Ķ������ļ���ֻ�轫�������ļ�����չ����Ϊ.bytes�����ɽ���ʶ��ΪTextAsset��
+1.AssetBundle是一种存储资源的文件格式，它可以存储任意一种unity引擎能够识别的资源，也能够存包含用户自定义的二进制文件，只需将二进制文件的扩展名改为.bytes，即可将其识别为TextAsset。
 
-2.AssetBundle�ı������ҪСд���ű����ܱ��AssetBundle��
+2.AssetBundle的标记名称要小写，脚本不能标记AssetBundle。
+脚本可以作为文本资源（TextAsset）包含在资源包中，但是它们不会作为实用的可执行代码。如果我们想在资源包（AssetBundle）中包含脚本代码，并且希望脚本可以在程序中被执行，那么脚本需要被预编译成程序集，并且使用反射类来加载程序集中的脚本
+
+3.使用步骤
+创建AssetBundle：BuildPipeline.BuildAssetBundle (obj, null, targetPath, BuildAssetBundleOptions.CollectDependencies)
+参数1：它只能放一个对象，因为我们这里是分别打包，所以通过循环将每个对象分别放在了这里。
+参数2：可以放入一个数组对象。
+
+默认情况下打的包只能在电脑上用，如果要在手机上用就要添加一个参数。
+Android上：
+BuildPipeline.BuildAssetBundle (obj, null, targetPath, BuildAssetBundleOptions.CollectDependencies,BuildTarget.Android)
+IOS上:
+BuildPipeline.BuildAssetBundle (obj, null, targetPath, BuildAssetBundleOptions.CollectDependencies,BuildTarget.iPhone)
+
+另外，电脑上和手机上打出来的Assetbundle不能混用，不同平台只能用自己的。
+上传AssetBundle：
+读取：
