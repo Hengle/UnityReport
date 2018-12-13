@@ -1,2 +1,6 @@
 1.using UnityEngine.SceneManagement;
 SceneManager.LoadScene();
+
+2.场景的重新加载
+Scene currentScene=SceneManager.GetActiveScene();
+SceneManager.LoadScene(currentScene.name);
