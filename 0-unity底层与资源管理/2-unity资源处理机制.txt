@@ -1,51 +1,58 @@
-1.GUID��fileID��unity��Ϊÿһ������AssetsĿ¼�е���Դ����һ��meta�ļ����ļ��м�¼��GUID������������¼��Դ֮������ù�ϵ������fileID�����ڼ�¼��Դ�ڲ���������ϵ��
-InstanceID��ʵ��ID����unity������ʱ��Ϊ��������Դ������Ч�ʣ������ڲ�ά��һ��������������ļ���GUID��fileIDת����Ϊ������ֵ�������ֵ�ڱ��λỰ����Ψһ�ģ�����ʵ��ID��
-��������ʱ��ʵ��ID���������й�����ʹ�õ��Ķ���Resources�ļ����µ����ж��󣬶��ᱻһ���ʼ�����������ʱ�������µ���Դ��Ҳ��Ϊ��������Ӧ��Ŀ��
+1.GUID和fileID：unity会为每一个导入Assets目录中的资源创建一个meta文件，文件中记录了GUID，它是用来记录资源之间的引用关系；还有fileID，用于记录资源内部的依赖关系。
+InstanceID（实例ID）：unity在运行时，为了提升资源管理的效率，会在内部维护一个缓存表，负责将文件的GUID和fileID转换成为整数数值，这个数值在本次会话中是唯一的，叫做实例ID。
+程序启动时，实例ID缓存与所有工程内使用到的对象及Resources文件夹下的所有对象，都会被一起初始化。如果运行时导入了新的资源，也会为其添加相应条目。
 
-2.��unity3d��һ�������ô�����ļ�
-��Դ�ļ�
-�����ļ�
-���л��ļ�
-�ı��ĵ�
-�����л��ļ�
-meta�ļ�
-��Դ�ļ�
+2.在unity3d中一般存在这么几种文件
+资源文件
+代码文件
+序列化文件
+文本文档
+非序列化文件
+meta文件
+资源文件
 
-��Դ�ļ�ָһЩ�����õģ����Ҳ����޸ĵ��ļ����������ļ�һ�����������ʦ����Ƶ��Ƶ���ʦ������ļ�������FBX�ļ�����ͼ�ļ�����Ƶ�ļ�����Ƶ�ļ��������ļ�����Ȼ�����ļ����Ա���Ϊ�������ļ�������������һ�㲻��ȥ���޸ģ�����Ҳ��Ϊ����Դ�ļ������������ļ���unity�ж����ڵ���ʱ����ת����ÿһ�����Ͷ���Ӧһ��AssetImporter,����AudioImporter��TextureImporter��ModelImport�ȵȡ���unity�е����������Դ����Inspector����������ý��棬���ж����ý�����޸Ķ��ᱣ�浽��Ӧ��Importer�С�
+资源文件指一些创建好的，并且不再修改的文件。这样的文件一般是美术设计师，音频视频设计师创造的文件，比如FBX文件，贴图文件，音频文件，视频文件，动画文件（虽然动画文件可以被认为是配置文件，不过在由于一般不会去做修改，所以也认为是资源文件）。像这类文件，unity中都会在导入时进行转化。每一个类型都对应一个AssetImporter,比如AudioImporter，TextureImporter，ModelImport等等。在unity中点击这样的资源，在Inspector面板会出现设置界面，所有对设置界面的修改都会保存到对应的Importer中。
 
-  �����ļ���
-  �����ļ��������еĴ����ļ���������ļ���shader�ļ��ȣ��ڵ���ʱ��unity�����һ�α��롣
+  代码文件：
+  代码文件包括所有的代码文件，代码库文件，shader文件等，在导入时，unity会进行一次编译。
 
-  ���л��ļ��������ļ�����
-  ���л��ļ�ͨ����ָunity�ܹ����л����ļ���һ����unity������һЩ���͡�����prefab(Ԥ����)��unity3d(����)�ļ���asset(ScriptableObject)�ļ�.mat�ļ�(������)����Щ�ļ��ܹ�������ʱ    ֱ�ӷ����л�Ϊ��Ӧ���һ��ʵ����
+  序列化文件（数据文件）：
+  序列化文件通常是指unity能够序列化的文件，一般是unity自身的一些类型。比如prefab(预制体)，unity3d(场景)文件，asset(ScriptableObject)文件.mat文件(材质球)，这些文件能够在运行时直接反序列化为对应类的一个实例，也就是说这些文件只是一个实例而已，对于不同的对象，它们是不同的，比如脚本组件，可以添加到不同的游戏对象上，但是在不同的对象上，它有不同的值，也就是说虽然使用的是同一个脚本，但是它们却是不同的实例。而非序列化对象则不然，比如纹理资源，修改一张纹理，那么所有使用到这张纹理的对象它的纹理都会改变，也就是纹理不是类，它的属性是相对于所有对象统一的。
 
-  �ı��ĵ���
-  �ı��ĵ��Ƚ����⣬���������л��ļ�������unity����ʶ��ΪTextAsset��������Դ�ļ��������ֲ���Ҫ��Դ�ļ������������ú�ת��������txt��xml�ļ��ȵȡ�
+  文本文档：
+  文本文档比较特殊，它不是序列化文件，但是unity可以识别为TextAsset。很像资源文件，但是又不需要资源文件那样进行设置和转化。比如txt、xml文件等等。
 
-  �����л��ļ���
-  �������ļ���Unity�޷�ʶ����ļ�������һ���ļ���Ҳ�ᱻ��Ϊ��һ���ļ��������޷�ʶ��
+  非序列化文件：
+  非序列文件是Unity无法识别的文件，比如一个文件夹也会被认为是一个文件，但是无法识别。
 
 
-3.meta�ļ�
+3.meta文件
 GUID
-guid��meta����������Ҫ�����ݡ����guid����������ļ�����������ļ���ʲô���ͣ��������ļ��У������仰˵��ͨ��GUID�Ϳ����ҵ������е�����ļ�������������Ŀ��ʲôλ�á��ڱ༭����ʹ��AssetDatabase.GUIDToAssetPath��AssetDatabase.AssetPathToGUID���л�ת��
+guid是meta中最最最重要的数据。这个guid代表了这个文件，无论这个文件是什么类型（甚至是文件夹）。换句话说，通过GUID就可以找到工程中的这个文件，无论它在项目的什么位置。在编辑器中使用AssetDatabase.GUIDToAssetPath和AssetDatabase.AssetPathToGUID进行互转。
 
-������ÿ��svn�ύʱ���������meta�ļ������һ��Ҫ�򿪿�һ�¡��������guid�Ƿ񱻸��ġ��������ǲ���Ҫ���ĵġ�
+所以在每次svn提交时如果发现有meta文件变更，一定要打开看一下。看看这个guid是否被更改。理论上是不需要更改的。
 
-ImportSetting����
+ImportSetting数据
 
-����Ƚ���Ҫ��������ImportSetting���ݡ����ݲ�ͬ���ļ����ͣ����������ǲ�ͬ��ImportSetting���ݣ����������NativeFormatImporter��ModelImporter��AudioImporter�ȵȡ�ֻҪ����Inspector����е���Ŀ�������Կ���ÿһ�е����塣
+后面比较重要的数据是ImportSetting数据。根据不同的文件类型，它的数据是不同的ImportSetting数据，比如上面的NativeFormatImporter，ModelImporter，AudioImporter等等。只要对照Inspector面板中的条目，都可以看懂每一行的意义。
 
-����֪�����֮�����ǿ��Է��֣��������ǰ�һ���ļ�������ļ���meta�ļ���һ��Unity���̸��Ƶ���һ��Unity�����У����������ǲ����ġ�����ǰ��2�������ֶ��ü�ͬһ��ģ�͵�20����������ɵ�����ˣ�ֱ�ӽ����fbx������meta�ļ�������ȥ���У���
+所以知道这个之后，我们可以发现，假如我们把一个文件和这个文件的meta文件从一个Unity工程复制到另一个Unity工程中，它的配置是不会变的。（以前在2个工程手动裁剪同一个模型的20个动画真是傻到家了，直接将这个fbx和它的meta文件拷贝过去就行！）
 
-FileID��LocalID��
+FileID（LocalID）
 
-��һ�������ǣ������һ��ͼ�������������ɸ�ͼƬ����ô�����GUID��ô��Ӧһ���ļ��أ��ǵģ�����һ���ļ����ж���ļ������������Ҫ����һ��ID����ʾ�������LocalID����ϰ����meta�ļ��е�����FileID��
+首先介绍 fileID，fileID用于标识资源内部的资源。一般fileID也是直接记录在 meta 文件里面的。
+资源间的依赖关系使用<guid, fileID>来确定；
+资源内部的依赖关系使用 fileID。这里要和guid区分开，guid标记了每个asset对象，但是它不是万能的，因此需要fileid来辅助它完成内部资源的标记。
+什么时候需要呢，分为以下两种情况，对于非序列化数据来说，比如两个prefab拥有同一张图片，它们的fileid是相同的，因为它们引用的是同一张图片，而且这张图片的属性是统一的。对于序列化数据而言，由于不同的实例拥有不同的序列化数据，这个时候就需要对其进行标记，就需要用到fildid，相同的一个序列化资源在不同的对象中拥有不同的fileid，但是guid是相同的。
 
-FileID�洢��ʽ��2��
 
-������Դ�ļ��������л��ļ�������һ�㲻��ȥ����Դ�ļ�������FileID�洢��meta�ļ��С�������һ��fbx�ļ���meta�ļ�
+FileID存储方式有2种
+对于资源文件，非序列化文件，由于一般不会去更改源文件，所以FileID存储在meta文件中。以下是一个fbx文件的meta文件
 
-4.���������Ϸ����������ʹ������SVN�İ汾���ƹ��ߣ�������������Meta�ļ������á�����Ϸ����������һ����Ϸ��Դ��Unity����ֱ�Ӱ����ļ�·�������ƣ�����ʹ��һ����һ�޶���GUID��ָ�򹤳���ĸ���Դ�ļ������GUID������Unity����Ϊÿ����Դ���ļ������ɵ�Meta�ļ�� 
-ʹ��GUID�ĺô����ǣ���ʹ���ƶ��������������޸���Դ�����ݣ������Դ��Ȼ����ͨ��GUID�������ã�ֻҪGUID���䣬��Դ���ܹ������ã���ȱ�����������ȷ����ʶ��Meta�ļ��Ǳ��������ض�����Դ�ϵģ������ɾ����һ��meta�ļ���Unity����Ϊԭʼ����Դ�ļ��Ѿ���ɾ����Ȼ��Ϊ������µġ���Դ�ļ�����һ���µ�GUID���������Ϸ�����е���Դ�����жϵ����ԭ�� 
-����GUID��meta�ļ����洢���й���Դ�������Ϣ�����磬��ͼ��Դ�ڵ���ʱ���Ե�����׼��ͼ��������ͼ��GUI��ͼ��cookie���߹�����ͼ����Щ�������ö��ᱻ�洢��meta�ļ�� 
+instanceID
+每一个资源，样每一次加载都需要对GUID和File ID遍历查找比较判断对应的Object是否加载，这样就会带来性能问题。所以基于这个原因，所以利用GUID和File ID生成一个Instance ID，在Unity内部维护了一个Instance ID的映射缓存来标识各个Object，每当有新的Objects添加到缓存中时，Instance ID以简单的单调递增的方式进行赋值。
+另外Instance ID的生命周期和Object的创建销毁是一致的。
+
+4.如果你在游戏开发过程中使用诸如SVN的版本控制工具，那你必须得理解Meta文件的作用。在游戏场景中引用一个游戏资源，Unity并不直接按照文件路径和名称，而是使用一个独一无二的GUID来指向工程里的该资源文件。这个GUID储存在Unity工程为每个资源和文件夹生成的Meta文件里。 
+使用GUID的好处就是，即使你移动、重命名或者修改资源的内容，这个资源仍然可以通过GUID来被引用（只要GUID不变，资源就能够被引用）。缺点是你必须明确的意识到Meta文件是被关联到特定的资源上的，如果你删除了一个meta文件，Unity会认为原始的资源文件已经被删除，然后为这个“新的”资源文件生成一个新的GUID。这就是游戏场景中的资源引用中断的最常见原因。 
+除了GUID，meta文件还存储了有关资源导入的信息。例如，贴图资源在导入时可以当作标准贴图、法线贴图、GUI贴图、cookie或者光线贴图。这些导入设置都会被存储在meta文件里。 
